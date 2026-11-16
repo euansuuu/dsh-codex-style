@@ -32,6 +32,7 @@
     "packages/client/src/features/sidebar-status/group-status.ts": 3,
     "packages/client/src/features/sidebar-status/sidebar-status.ts": 2,
     "packages/client/src/features/sodium/flow-items.ts": 2,
+    "packages/client/src/features/workspace-words/workspace-words.ts": 1,
     "packages/client/src/features/workspace/archived-list.ts": 2,
     "packages/client/src/shared/held-writes.ts": 1,
     "packages/client/src/shared/page-scale-columns.ts": 2,

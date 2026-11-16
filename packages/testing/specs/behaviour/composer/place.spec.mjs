@@ -219,6 +219,9 @@ function mountLargeBatch(t) {
 
 export default spec({ page: 'composer' }, ({ test }) => {
   test('a mounted transcript holds the composer on the scrollport\'s bottom under every phase mark', async (t) => {
+    // The bar is read in the Claude palette's canvas (CANVAS); the page ships on
+    // the DeepSeek brand, so it stands on Claude before the shell is built.
+    await t.prefs({ brand: 'claude' })
     await mount(t, 'active')
     await waitForMark(t, true)
     const active = await readPlace(t)

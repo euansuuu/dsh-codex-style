@@ -129,7 +129,7 @@ export default {
     check('no injected markup executed', r.pwned === 0, `${r.pwned} executions`)
     check('account name rendered as text', r.accountUser === MARKUP, JSON.stringify(r.accountUser))
     check('mirrored plugin label and badge rendered as text', r.mirroredText === MARKUP && r.mirroredBadge === MARKUP, JSON.stringify([r.mirroredText, r.mirroredBadge]))
-    check('account-hold toast renders the username as text', r.banToast === MARKUP + ': account_banned', JSON.stringify(r.banToast))
+    check('the personal profile renders the username as text', r.profileName === MARKUP, JSON.stringify(r.profileName))
     check('avatar URL adds no attribute to the page',
       r.avatarAttrs !== null && r.avatarAttrs.every((a) => a === 'class' || a === 'data-dsh-claude-photo') &&
       (r.photo === null || r.photo.attrs.every((a) => !/^on/i.test(a))), JSON.stringify([r.avatarAttrs, r.photo]))
@@ -216,6 +216,10 @@ export default {
     check('the injected header names the same user as the host account row',
       r.injectName !== null && r.injectName === r.hostRowText,
       JSON.stringify({ header: r.injectName, row: r.hostRowText }))
+    check('a signed-in account with no name of its own keeps the host\'s label on the row and in the injected header, not the machine\'s user',
+      typeof r.hostRowTextNoName === 'string' && r.hostRowTextNoName !== '' && r.hostRowTextNoName !== 'Tester' &&
+        r.injectNameNoName === r.hostRowTextNoName,
+      JSON.stringify({ row: r.hostRowTextNoName, header: r.injectNameNoName }))
     check('the account row\'s hover plate is the row itself, with the name centred in it',
       !!r.accountRowPlate && r.accountRowPlate.box === 'border-box' &&
         r.accountRowPlate.height >= 32 &&
@@ -248,21 +252,16 @@ export default {
       JSON.stringify({ first: r.injectHealedFirst, same: r.injectHealedSame }))
     check("the host's keyboard walk reaches our injected button",
       r.focusInInjected === true, JSON.stringify(r.focusInInjected))
-    check('the hold screen opens over the menu and survives the leaves its overlay causes',
-      r.banOpened === 1 && r.banSurvivesLeave === 1,
-      JSON.stringify({ opened: r.banOpened, survived: r.banSurvivesLeave }))
-    check('the hold screen covers the whole window: no dialog cap holds it inside two edges',
-      !!r.banCover && r.banCover.max === 'none none' &&
-        r.banCover.box[0] === 0 && r.banCover.box[1] === 0 &&
-        r.banCover.box[2] === r.banCover.view[0] && r.banCover.box[3] === r.banCover.view[1],
-      JSON.stringify(r.banCover))
-    check('the host menu stays up behind the hold screen and the screen leaves by its own control, playing its exit first',
-      r.menuBehindBan === true && r.banLeaving === true && r.banAfterDismiss === 0,
-      JSON.stringify({ menu: r.menuBehindBan, leaving: r.banLeaving, exitMs: r.banExitMs, dismissed: r.banAfterDismiss }))
-    check('with the easter egg off the account row is a plain name a press does not open, and back on it is the button again',
-      !!r.banOff && !!r.banOff.row && r.banOff.row.role === null && r.banOff.row.tabindex === null && r.banOff.opened === 0 &&
-        !!r.banOn && !!r.banOn.row && r.banOn.row.role === 'button' && r.banOn.row.tabindex === '0',
-      JSON.stringify({ off: r.banOff, on: r.banOn }))
+    check('the personal profile opens from the account header and survives pointer movement',
+      r.profileOpened === 1 && r.profileSurvivesLeave === 1 && r.profileName === r.injectName,
+      JSON.stringify({ opened: r.profileOpened, survived: r.profileSurvivesLeave, name: r.profileName }))
+    check('the personal profile covers the full window',
+      !!r.profileCover && r.profileCover.box[0] === 0 && r.profileCover.box[1] === 0 &&
+        r.profileCover.box[2] === r.profileCover.view[0] && r.profileCover.box[3] === r.profileCover.view[1],
+      JSON.stringify(r.profileCover))
+    check('the host account menu closes under the profile and the profile closes with its own button',
+      r.menuBehindProfile === false && r.profileAfterDismiss === 0 && r.profileFocusRestored === true,
+      JSON.stringify({ menu: r.menuBehindProfile, dismissed: r.profileAfterDismiss, focus: r.profileFocusNode }))
     check('closing the host menu leaves no injected container behind',
       r.injectAfterClose === 0 && r.hostMenuAfterClose === 0,
       JSON.stringify({ containers: r.injectAfterClose, menus: r.hostMenuAfterClose }))

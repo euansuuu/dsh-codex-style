@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-15",
+  "group": "fixes",
+  "order": 0,
+  "external": false,
+  "zh": "修复账户状态流按旧帧结构读取、把已登录账户判成未登录，从而导致账户区不取 DeepSeek 账户昵称而显示 Windows 用户名的问题；同时已登录账户不再退回机器用户名，资料里没有名字时显示宿主自己的账户标签",
+  "en": "Fix the account stream being read as the state itself instead of the host's { type, state } frames, which judged a signed-in account as signed out and left the account area on the Windows user name instead of the DeepSeek account's nickname; a signed-in account also no longer falls back to the machine's user name, showing the host's own account label when the profile carries no name"
+}

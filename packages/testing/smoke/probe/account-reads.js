@@ -19,7 +19,7 @@
       return 'other'
     }) : null
     var syntheticPopover = document.querySelector('.dsh-claude-account-popover')
-    r.syntheticHeader = !!(syntheticPopover && syntheticPopover.querySelector('[data-dsh-claude-ban-row]'))
+    r.syntheticHeader = !!(syntheticPopover && syntheticPopover.querySelector('[data-dsh-claude-profile-row]'))
     // The closed drawer's rows are built and reconciled while it is closed, so
     // the panel sits over the account row with its icons in it: visibility has
     // to take that content out of the paint and hit-test tree.
@@ -161,6 +161,15 @@
       window.__pushForm({ collapseFooter: true })
       await sleep(500)
       r.footerSwitch = { before: before, off: off, back: read() }
+      // Without the reader's own nickname the account's name stands on the row.
+      // The stand-in's machine user is "Tester" and its profile names "Ada", so
+      // the reading tells which of the two the row took.
+      window.__pushForm({ username: '' })
+      await sleep(500)
+      var user = document.querySelector('.dsh-claude-account-user')
+      r.accountUserNoCustom = user ? user.textContent : null
+      window.__pushForm({ username: 'Tester' })
+      await sleep(300)
     })
   })
 })()

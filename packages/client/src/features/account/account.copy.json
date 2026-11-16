@@ -1,5 +1,6 @@
 {
   "accountNameFallback": { "zh": "用户", "en": "User" },
+  "profileEntry": { "zh": "查看个人主页", "en": "View profile" },
   "accountSettingsRow": { "zh": "设置", "en": "Settings" },
   "footerPluginRow": { "zh": "插件", "en": "Plugin" },
   "collapseTitle": { "zh": "重绘账户区", "en": "Redraw the account area" },

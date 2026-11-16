@@ -18,9 +18,10 @@ rule names (D48). The three tables marked generated are written from
 
 Every look is a **colour card**: an accent, a canvas, a sidebar and the reader's
 bubble per scheme, an inline-code ink and, when its prose links keep a family of
-their own, a link per scheme. The first card is the default look. A card's dark
-outlines are drawn either as a lit highlight or as a flat surface step, and its
-brand art takes its colour from the ink or the accent (D30).
+their own, a link per scheme. The brand chosen in the settings marks its card as
+the default look (DeepSeek's), and the other card can be picked beside it. A
+card's dark outlines are drawn either as a lit highlight or as a flat surface
+step, and its brand art takes its colour from the ink or the accent (D30).
 
 The colour every token paints is a **tone** of one of those seeds; the build
 resolves the tones into plain colours, so the page ships literals and nothing
@@ -75,8 +76,8 @@ card leaves unset.
 <!-- generated:tokens (packages/client/src/theme/tokens.json) -->
 | Card | Accent | Canvas light | Canvas dark | Sidebar light | Sidebar dark | Bubble light | Bubble dark | Link light | Link dark | Edges | Logo ink | Code light | Code dark |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| claude (default) | `#d97757` | `#ffffff` | `#191919` | `#fafafa` | `#1f1f1f` | `#f4f2f3` | `rgba(255, 255, 255, 0.06)` | `#184f95` | `#8ab4f8` | highlight | ink | `#161616` | `#fdfdfd` |
-| deepseek | `#4d6bfe` | `#fbfcff` | `#13161d` | `#f7f9ff` | `#13161d` | `#ecf0ff` | `#262b36` | `#3b56d9` | `#8fa4ff` | surface | accent | `#0f1115` | `#eef1f8` |
+| claude | `#d97757` | `#ffffff` | `#191919` | `#fafafa` | `#1f1f1f` | `#f4f2f3` | `rgba(255, 255, 255, 0.06)` | `#184f95` | `#8ab4f8` | highlight | ink | `#161616` | `#fdfdfd` |
+| deepseek (default) | `#4d6bfe` | `#fbfcff` | `#13161d` | `#f7f9ff` | `#13161d` | `#ecf0ff` | `#262b36` | `#3b56d9` | `#8fa4ff` | surface | accent | `#0f1115` | `#eef1f8` |
 
 | Tone | Seed | Light | Dark |
 | --- | --- | --- | --- |
@@ -209,13 +210,14 @@ card leaves unset.
 
 ## Two palettes · 两套配色归属
 
-The Colours and Typefaces rows each choose who paints: **Claude** (the default)
-or **Follow the host**. Every rule that writes a host token carries the Claude
-gate in its selector, and so does every rule that paints the skin's canvas onto
-the host's frame (`<html>`, `<body>`, `#root`, the sidebar and conversation
-columns); the build refuses an ungated one. Under "follow the host" those rules
-drop out: the host's own tokens stand, or another theme plugin's, such as a
-wallpaper plugin that clears the canvas and turns the overlays to glass.
+The Colours and Typefaces rows each choose who paints: the skin's own colours
+and faces (both the default) or the host's. Every rule that writes a host token
+carries the skin's palette gate in its selector, and so does every rule that
+paints the skin's canvas onto the host's frame (`<html>`, `<body>`, `#root`, the
+sidebar and conversation columns); the build refuses an ungated one. With the
+host's chosen, those rules drop out: the host's own tokens stand, or another
+theme plugin's, such as a wallpaper plugin that clears the canvas and turns the
+overlays to glass.
 
 The skin's own surfaces read only its private tokens and host tokens. Under the
 host palette each private token is an alias of a host token (the token table's
@@ -896,6 +898,9 @@ meet. Under the other brands the host's whale stands.
 The host's own shimmering words step aside for the skin's line beside it: the
 wording in the secondary label on a line of its own, the turn's clock after it in
 the caption with tabular figures, and the "No response yet" badge after that. The
+wording itself belongs to the brand (shared/turn-activity.ts): the skin's own
+word under the Claude brand, and the host's own word — the one its interface
+shows — under DeepSeek's. The
 line takes the row's own width and gives way inside it: the words are carried
 whole, so a clause the row has no room for is clipped where the room ends and the
 copy draws an ellipsis, with the loader, the clock and the badge keeping their
@@ -959,13 +964,16 @@ composer card inside the composer stack — so only the arrangement differs.
 | workspace / preset row | the card's footer tray | hairline chips directly above the card |
 | column width | the hero's centred box | a narrower composer column, with the greeting and the panel forming one block against its left edge |
 
-The Appearance tab's cards draw these arrangements as miniature pages rather
-than placeholder bars, exaggerating the content column and type for legibility
-at that size. The studio greeting and dashboard stand slightly narrower than
-the context row and composer. The dashboard uses the real panel, stat and
-heat-cell classes, including all six stats and the seven-day-row grid; the
-classic card keeps the centred brand greeting and the composer's footer tray
-(`features/home/home-preview.css`).
+The home layout's words belong to the brand (features/home/greeting-copy.ts):
+the Claude brand speaks its own welcomes, while the DeepSeek brand hands the
+headline back to the host, whose line is DeepSeek's own official copy in
+whichever language the shell runs. The Appearance tab's cards draw these
+arrangements as miniature pages rather than placeholder bars, exaggerating the
+content column and type for legibility at that size. The studio greeting and
+dashboard stand slightly narrower than the context row and composer. The
+dashboard uses the real panel, stat and heat-cell classes, including all six
+stats and the seven-day-row grid; the classic card keeps the centred brand
+greeting and the composer's footer tray (`features/home/home-preview.css`).
 
 The studio composer is stamped `data-composer-variant="inline"` (the composer's
 pass reads the same preference), so the home card is drawn by the conversation's
@@ -1082,8 +1090,8 @@ reaction.
 
 ## Deepy · 小鲸鱼
 
-Under the DeepSeek brand (or when picked in the Mascot row) the mascot is Deepy,
-the pixel whale of the Deepy theme pack. Its sheets, crop boxes and still frames
+Under the DeepSeek brand — the default — (or when picked in the Mascot row) the
+mascot is Deepy, the pixel whale of the Deepy theme pack. Its sheets, crop boxes and still frames
 are in `features/mascot/sheets.ts`, like the crab's, and the two share one state
 machine, so a state added for one is a state for both. Its body is Deepy's blue
 with a navy outline and a white belly in both themes; on the dark canvas the

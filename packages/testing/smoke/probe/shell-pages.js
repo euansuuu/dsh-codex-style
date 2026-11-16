@@ -12,6 +12,11 @@
 
   probe.step(async function () {
     await probe.onlyFor(['brand'], async function () {
+      // The shipped default is the DeepSeek brand (packages/contracts/src/prefs.ts);
+      // the Claude palette this case reads belongs to the Claude brand, so the
+      // page stands on it first and the reading below is that brand's.
+      window.__pushForm({ brand: 'claude' })
+      await probe.nextPass('the Claude brand to take the page')
       // The Claude palette, light and dark: the ivory and warm-black canvases,
       // the clay accent, the raised card fill.
       var claudeLight = getComputedStyle(document.body)
@@ -47,6 +52,12 @@
       await probe.nextPass('the brand palette to be applied')
     })
     await probe.onlyFor(['hero'], async function () {
+      // The welcome this case walks is the Claude brand's own rotating pool
+      // (features/home/greetings.ts); the page stands on that brand first,
+      // and the DeepSeek brand's own headline — the host's line, kept — is
+      // walked at this block's foot.
+      window.__pushForm({ brand: 'claude' })
+      await probe.nextPass('the Claude brand to take the page')
       // The classic hero's welcome is drawn on arrival and holds between
       // passes: the draw pinned to either end of its pool gives two different
       // lines, and a further pass leaves the drawn one alone.
@@ -130,6 +141,39 @@
       r.greeting.high = await arrive(0.999)
       greetHolder.remove()
       await probe.nextPass('the classic hero to leave the page again')
+      // The DeepSeek brand, the shipped default: the hero keeps the host's own
+      // headline. The greeting layer writes nothing under that brand
+      // (greeting-copy.ts), so the span holds the host's line across the passes
+      // a welcome would have been written on. A fresh hero root stands for it:
+      // the Claude walk's span went off the page with the drawn welcome, which
+      // is the page a reader's brand flip actually returns to.
+      window.__pushForm({ brand: 'deepseek' })
+      await probe.nextPass('the DeepSeek brand to take the page')
+      var deepseekHolder = document.createElement('div')
+      deepseekHolder.setAttribute('data-conversation-scroll', '')
+      var deepseekRoot = document.createElement('div')
+      deepseekRoot.className = '_root_x_1'
+      deepseekRoot.setAttribute('data-phase', 'hero')
+      var deepseekGroup = document.createElement('div')
+      deepseekGroup.className = '_titleGroup_x_1'
+      var deepseekSpan = document.createElement('span')
+      deepseekSpan.textContent = 'Host greeting'
+      deepseekGroup.appendChild(deepseekSpan)
+      deepseekRoot.appendChild(deepseekGroup)
+      deepseekHolder.appendChild(deepseekRoot)
+      document.body.appendChild(deepseekHolder)
+      document.body.appendChild(document.createElement('i'))
+      await probe.nextPass('a pass over the DeepSeek hero')
+      r.greeting.hostLine = deepseekSpan.textContent
+      document.body.appendChild(document.createElement('i'))
+      await probe.nextPass('a second pass over the DeepSeek hero')
+      r.greeting.hostLineHeld = deepseekSpan.textContent
+      deepseekHolder.remove()
+      await probe.nextPass('the DeepSeek hero to leave the page')
+      // Back on the Claude brand, so the cases after this one keep the page
+      // they were written on.
+      window.__pushForm({ brand: 'claude' })
+      await probe.nextPass('the Claude brand to take the page again')
     })
     await probe.onlyFor(['view-tabs'], async function () {
       // The conversation view tabs (ConversationSession's strip), in the row the

@@ -71,6 +71,9 @@ function setDark(t, on) {
 
 export default spec({ page: 'desktop', bands: ['wide'] }, ({ test }) => {
   test('at 100 the page keeps its existing opaque fills without a mark', async (t) => {
+    // The fills this file names are the Claude palette's; the page ships on the
+    // DeepSeek brand, so every test that reads them stands on Claude first.
+    await t.prefs({ brand: 'claude' })
     await buildShell(t)
     const page = await read(t)
     t.expectThat.equal(page.attribute, null, 'no opacity mark at the default')
@@ -82,6 +85,7 @@ export default spec({ page: 'desktop', bands: ['wide'] }, ({ test }) => {
   })
 
   test('at 50 the canvas and both columns mix toward transparent', async (t) => {
+    await t.prefs({ brand: 'claude' })
     await buildShell(t)
     await t.prefs({ backgroundOpacity: '50' })
     const page = await read(t)
@@ -94,6 +98,7 @@ export default spec({ page: 'desktop', bands: ['wide'] }, ({ test }) => {
   })
 
   test('at 0 the canvas is clear and the shared popover keeps its paint', async (t) => {
+    await t.prefs({ brand: 'claude' })
     await buildShell(t)
     const before = await read(t)
     t.expectThat.equal(before.popover, 'rgb(255, 255, 255)', 'the popover starts opaque')
@@ -106,6 +111,7 @@ export default spec({ page: 'desktop', bands: ['wide'] }, ({ test }) => {
   })
 
   test('writing 100 removes the override and restores the default', async (t) => {
+    await t.prefs({ brand: 'claude' })
     await buildShell(t)
     await t.prefs({ backgroundOpacity: '50' })
     await t.prefs({ backgroundOpacity: '100' })
@@ -116,6 +122,7 @@ export default spec({ page: 'desktop', bands: ['wide'] }, ({ test }) => {
   })
 
   test('out-of-range and unreadable values follow the row semantics', async (t) => {
+    await t.prefs({ brand: 'claude' })
     await t.prefs({ backgroundOpacity: '400' })
     t.expectThat.equal((await read(t)).attribute, null, '400 clamps to 100')
     await t.prefs({ backgroundOpacity: '-40' })
@@ -158,6 +165,7 @@ export default spec({ page: 'desktop', bands: ['wide'] }, ({ test }) => {
   })
 
   test('the dark canvas and sidebar mix at the same share', async (t) => {
+    await t.prefs({ brand: 'claude' })
     await buildShell(t)
     await setDark(t, true)
     await t.prefs({ backgroundOpacity: '50' })

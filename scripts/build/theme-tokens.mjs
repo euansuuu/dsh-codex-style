@@ -316,14 +316,15 @@ function row(cells) {
 /**
  * The palette as Markdown tables: the cards with their seeds, the tones with
  * their steps, and every token with its resolved value in the card × scheme
- * cells, its host alias and its use.
+ * cells, its host alias and its use. `defaultCard` is the card the brand in
+ * force paints, which the card table marks as the default look.
  */
-function tokenTable(doc) {
+function tokenTable(doc, defaultCard) {
   const values = resolvePalette(doc)
   const cards = doc.palette.cards
   const cell = (value) => (value === undefined ? '—' : tableCell(value))
-  const cardRows = cards.map((card, index) => row([
-    index === 0 ? `${card.id} (default)` : card.id,
+  const cardRows = cards.map((card) => row([
+    card.id === defaultCard ? `${card.id} (default)` : card.id,
     tableCell(card.accent),
     tableCell(card.canvas.light),
     tableCell(card.canvas.dark),
@@ -369,12 +370,12 @@ function tokenTable(doc) {
  * Write the card, tone and token tables into the region of docs/STYLE.md.
  * @returns whether the file changed.
  */
-export function writeTokenTable(stylePath, doc) {
+export function writeTokenTable(stylePath, doc, defaultCard) {
   const text = fs.readFileSync(stylePath, 'utf8')
   const from = text.indexOf(TABLE_BEGIN)
   const to = text.indexOf(TABLE_END)
   if (from === -1 || to < from) throw new Error(`build: ${path.basename(stylePath)} lacks the ${TABLE_BEGIN} … ${TABLE_END} region`)
-  const next = text.slice(0, from + TABLE_BEGIN.length) + '\n' + tokenTable(doc) + '\n' + text.slice(to)
+  const next = text.slice(0, from + TABLE_BEGIN.length) + '\n' + tokenTable(doc, defaultCard) + '\n' + text.slice(to)
   if (next === text) return false
   fs.writeFileSync(stylePath, next)
   return true

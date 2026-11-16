@@ -26,11 +26,11 @@
     var topUpCS = topUp ? getComputedStyle(topUp) : null
     r.topUpInk = topUpCS ? topUpCS.color : null
     r.topUpFill = topUpCS ? topUpCS.backgroundColor : null
-    var banRow = document.querySelector('[data-dsh-claude-ban-row]')
-    if (banRow) banRow.click()
-    var toast = document.querySelector('.dsh-claude-ban-toast-text')
-    r.banToast = toast ? toast.textContent : null
-    var dismiss = document.querySelector('.dsh-claude-ban [data-dsh-ban-dismiss]')
+    var profileRow = document.querySelector('[data-dsh-claude-profile-row]')
+    if (profileRow) profileRow.click()
+    var profileName = document.querySelector('.dsh-claude-profile-name')
+    if (profileName) r.profileName = profileName.textContent
+    var dismiss = document.querySelector('.dsh-claude-profile-close')
     if (dismiss) dismiss.click()
     // A closed popover card must not answer the host's menu role: the host's
     // keyboard arbitration queries every [role=menu] in the document as a menu

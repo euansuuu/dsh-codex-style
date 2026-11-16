@@ -170,11 +170,14 @@ function processSummaryScenario({ check }) {
       const overtime = notes.waitOvertime ?? {}
       const working = notes.waitWorking ?? {}
       const headers = notes.headers ?? []
-      // The page's own language, read off the line the skin wrote: the same two
-      // languages the copy document carries. Any of the states answers it, since
-      // the reading may be taken while the line is on any of them.
-      const stateWords = [COPY.chatWaitThinking, COPY.chatWaitWriting, COPY.chatWaitToolCall, COPY.chatWaitTools]
-      const lang = stateWords.some((word) => word.zh === working.label) ? 'zh' : 'en'
+      // The page's own language, read off the host's words under the line: those
+      // are localized by the shell, whatever brand paints the line (the skin's
+      // own words for the Claude brand, the host's own word for DeepSeek's).
+      const lang = /[\u4e00-\u9fff]/.test(early.words ?? '') ? 'zh' : 'en'
+      // The thinking state's word belongs to the brand (shared/turn-activity.ts):
+      // the skin's own under the Claude brand, and the host's own word under
+      // DeepSeek's — the word the wait stands on before anything can be read.
+      const thinkWord = early.label === undefined ? COPY.chatWaitThinking[lang] : early.label
       const sentence = (parts) => parts.join(COPY.processSummaryFullSeparator[lang])
       // The sentence names the figures each body holds: the counts are read off
       // the rows the host drew, so a host that keeps record rows of its own
@@ -191,19 +194,22 @@ function processSummaryScenario({ check }) {
       return [
         check('the running row carries the skin\'s line in place of the host\'s words',
           early.line === true && early.wordsShown === false, JSON.stringify(early)),
-        // The brand in force here is the Claude one, whose wait word is the
-        // skin's own: the host's own words under the line are not what stands
-        // (shared/turn-activity.ts, one word per brand).
-        check('a wait nothing can be read from stands on the brand\'s own word, not the host\'s',
-          [COPY.chatWaitThinking.zh, COPY.chatWaitThinking.en].includes(early.label ?? '') &&
-            (early.words ?? '').includes(early.label ?? '') === false,
+        // The brand in force here is DeepSeek, the shipped default
+        // (packages/contracts/src/prefs.ts), whose wait word is the host's own:
+        // the line stands on the word the host's own interface shows, and the
+        // skin adds no second word of its own (shared/turn-activity.ts). The
+        // Claude brand's own word is read by the smoke case (cases/chat.mjs).
+        check('a wait nothing can be read from stands on the host\'s own word under the shipped DeepSeek brand',
+          (early.label ?? '') !== '' &&
+            [COPY.chatWaitThinking.zh, COPY.chatWaitThinking.en].includes(early.label ?? '') === false &&
+            (early.words ?? '').includes(early.label ?? ''),
           JSON.stringify({ label: early.label, words: early.words })),
         check('the line keeps the turn\'s clock in the host\'s units', /^\d+\s*(s|sec|secs|second|seconds|秒)$/i.test(early.clock ?? ''), JSON.stringify(early.clock)),
         check('past ten seconds of silence the line says the model has not answered', overtime.badge === COPY.chatWaitOvertime[lang], JSON.stringify(overtime)),
         check('the badge leaves once the model writes', working.line === true && working.badge === null, JSON.stringify(working)),
         check('the line says what the model is doing once it writes',
-          [COPY.chatWaitThinking[lang], COPY.chatWaitWriting[lang], COPY.chatWaitToolCall[lang], COPY.chatWaitTools[lang]].includes(working.label ?? ''),
-          JSON.stringify({ label: working.label, labelText: working.labelText, lang })),
+          [thinkWord, COPY.chatWaitWriting[lang], COPY.chatWaitToolCall[lang], COPY.chatWaitTools[lang]].includes(working.label ?? ''),
+          JSON.stringify({ label: working.label, labelText: working.labelText, lang, thinkWord })),
         check('every process group\'s header says what it holds, the host\'s words out of sight',
           headers.length === 2 && headers.every((header) => header.summaryDisplay !== 'none' && header.wordsDisplay === 'none'),
           JSON.stringify(headers)),

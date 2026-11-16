@@ -44,8 +44,26 @@ interface HostAccountProfile {
   profile?: HostAccountProfile
 }
 
-/** One frame of the account state stream: whether a credential is stored, and how a sign-in is doing. */
-export interface HostAccountFrame {
+/** One account state: whether a credential is stored, and how a sign-in is doing. */
+export interface HostAccountState {
   status?: string
-  attempt?: { phase?: string, id?: string }
+  attempt?: HostAccountAttempt
+}
+
+/** One sign-in attempt, as the account reports it. */
+export interface HostAccountAttempt {
+  phase?: string
+  id?: string
+}
+
+/**
+ * One frame of the account state stream. The installed host yields
+ * `{ type, state }` — `snapshot` for the opening state and every later
+ * refresh, `credentials-changed` when the stored credential changed — while an
+ * earlier host answered with the state alone, so a reader takes `state` when
+ * the frame carries it.
+ */
+export interface HostAccountFrame extends HostAccountState {
+  type?: string
+  state?: HostAccountState
 }

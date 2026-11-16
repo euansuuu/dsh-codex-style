@@ -392,14 +392,7 @@
     "body[data-dsh-claude-style][data-dsh-claude-brand=claude] [data-dsh-claude-part~=hero-mark]>*{display:none!}|display": {
       "selector": "body[data-dsh-claude-style][data-dsh-claude-brand=claude] [data-dsh-claude-part~=hero-mark]>*",
       "prop": "display",
-      "verdict": "needed",
-      "state": "hero",
-      "opponents": [
-        {
-          "kind": "inline",
-          "owner": "element"
-        }
-      ]
+      "verdict": "unmatched"
     },
     "body[data-dsh-claude-style] [data-dsh-header-band~=title] [data-dsh-header-title],body[data-dsh-claude-style] [data-dsh-header-band~=title] [data-dsh-header-trail]{position:fixed!;top:var(--dsh-header-band-title-top, calc(var(--dsh-windows-titlebar-height, 40px) / 2))!;left:var(--dsh-header-band-left)!;max-width:var(--dsh-header-band-max, none)!;margin:0!;transform:translateY(-50%)!;z-index:var(--dsh-claude-layer-chrome)!;-webkit-app-region:no-drag!}|position": {
       "selector": "body[data-dsh-claude-style] [data-dsh-header-band~=title] [data-dsh-header-title],body[data-dsh-claude-style] [data-dsh-header-band~=title] [data-dsh-header-trail]",
@@ -586,9 +579,14 @@
       "prop": "height",
       "verdict": "transient state"
     },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline]:focus-within,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:focus-within{background:transparent;border:none!;box-shadow:none;outline:none;padding:0;gap:0;display:flex;flex-direction:column;position:relative;width:100%;max-width:var(--dsh-composer-card-max-width, 100%);box-sizing:border-box;overflow:visible;height:auto}|border": {
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline]:focus-within,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:focus-within{background:var(--dsw-specific-input-major);border:1px solid var(--dsw-alias-border-l1)!;border-radius:22px;box-shadow:0 3px 12px #1414130a;outline:none;padding:16px 16px 10px;gap:0;display:flex;flex-direction:column;position:relative;width:100%;max-width:var(--dsh-composer-card-max-width, 100%);box-sizing:border-box;overflow:visible;height:auto}|border": {
       "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline]:focus-within,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:focus-within",
       "prop": "border",
+      "verdict": "transient state"
+    },
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline]:focus-within,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:focus-within{border-color:var(--dsw-alias-border-l2)!}|border-color": {
+      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline]:focus-within,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:focus-within",
+      "prop": "border-color",
       "verdict": "transient state"
     },
     "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-composer-hidden] [data-composer-seat]{display:none!}|display": {
@@ -626,57 +624,32 @@
       "prop": "border",
       "verdict": "transient state"
     },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-has-attachments=true] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-has-attachments=true] [data-input-scroll]{border-top:none!;border-radius:0 0 14px 14px;margin-top:-1px;min-height:32px;padding:8px 36px 6px 14px}|border-top": {
-      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-has-attachments=true] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-has-attachments=true] [data-input-scroll]",
-      "prop": "border-top",
-      "verdict": "transient state"
-    },
     "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger]:after,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]:after{display:none!}|display": {
       "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger]:after,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]:after",
       "prop": "display",
       "verdict": "transient state"
     },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]{border-style:dashed!;border-color:var(--dsw-alias-border-l4)!;box-shadow:none!;cursor:pointer!;transition:border-color var(--dsh-claude-timing-feedback)!}|border-style": {
-      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]",
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]{border-style:dashed!;border-color:var(--dsw-alias-border-l4)!;cursor:pointer!}|border-style": {
+      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]",
       "prop": "border-style",
       "verdict": "transient state"
     },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]{border-style:dashed!;border-color:var(--dsw-alias-border-l4)!;box-shadow:none!;cursor:pointer!;transition:border-color var(--dsh-claude-timing-feedback)!}|border-color": {
-      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]",
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]{border-style:dashed!;border-color:var(--dsw-alias-border-l4)!;cursor:pointer!}|border-color": {
+      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]",
       "prop": "border-color",
       "verdict": "transient state"
     },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]{border-style:dashed!;border-color:var(--dsw-alias-border-l4)!;box-shadow:none!;cursor:pointer!;transition:border-color var(--dsh-claude-timing-feedback)!}|box-shadow": {
-      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]",
-      "prop": "box-shadow",
-      "verdict": "transient state"
-    },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]{border-style:dashed!;border-color:var(--dsw-alias-border-l4)!;box-shadow:none!;cursor:pointer!;transition:border-color var(--dsh-claude-timing-feedback)!}|cursor": {
-      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]",
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]{border-style:dashed!;border-color:var(--dsw-alias-border-l4)!;cursor:pointer!}|cursor": {
+      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]",
       "prop": "cursor",
       "verdict": "transient state"
     },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]{border-style:dashed!;border-color:var(--dsw-alias-border-l4)!;box-shadow:none!;cursor:pointer!;transition:border-color var(--dsh-claude-timing-feedback)!}|transition": {
-      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger] [data-input-scroll]",
-      "prop": "transition",
-      "verdict": "transient state"
-    },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger]:hover [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]:hover [data-input-scroll]{border-color:var(--dsw-alias-state-business-primary)!}|border-color": {
-      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger]:hover [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]:hover [data-input-scroll]",
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger]:hover,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]:hover{border-color:var(--dsw-alias-state-business-primary)!}|border-color": {
+      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline][data-dsh-claude-part~=card-workspace-trigger]:hover,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card][data-dsh-claude-part~=card-workspace-trigger]:hover",
       "prop": "border-color",
       "verdict": "transient state"
     },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant=inline]:focus-within [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active]:not([data-ds-dark-theme]) [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:focus-within [data-input-scroll]{border-color:#1414132e!;box-shadow:0 0 0 1px #14141311,0 4px 12px #14141306}|border-color": {
-      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active]:not([data-ds-dark-theme]) [data-composer-card][data-composer-variant=inline]:focus-within [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active]:not([data-ds-dark-theme]) [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:focus-within [data-input-scroll]",
-      "prop": "border-color",
-      "verdict": "transient state"
-    },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active][data-ds-dark-theme] [data-composer-card][data-composer-variant=inline]:focus-within [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active][data-ds-dark-theme] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:focus-within [data-input-scroll]{border-color:#faf9f538!;box-shadow:0 0 0 1px #faf9f517,0 4px 16px #0003}|border-color": {
-      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active][data-ds-dark-theme] [data-composer-card][data-composer-variant=inline]:focus-within [data-input-scroll],body[data-dsh-claude-style][data-dsh-claude-composer-active][data-ds-dark-theme] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:focus-within [data-input-scroll]",
-      "prop": "border-color",
-      "verdict": "transient state"
-    },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline] button[data-dsh-claude-control=send],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card] button[data-dsh-claude-control=send]{box-shadow:none;background:transparent;color:var(--dsw-alias-label-caption);border:none!;cursor:pointer;transition:color var(--dsh-claude-timing-feedback),background-color var(--dsh-claude-timing-feedback)}|border": {
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline] button[data-dsh-claude-control=send],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card] button[data-dsh-claude-control=send]{box-shadow:none;background:var(--dsw-alias-bg-layer-2);color:var(--dsw-alias-label-secondary);border:none!;cursor:pointer;transition:color var(--dsh-claude-timing-feedback),background-color var(--dsh-claude-timing-feedback)}|border": {
       "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline] button[data-dsh-claude-control=send],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card] button[data-dsh-claude-control=send]",
       "prop": "border",
       "verdict": "transient state"
@@ -691,6 +664,16 @@
       "prop": "color",
       "verdict": "transient state"
     },
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline]:is(:not([data-dsh-claude-draft-empty]),[data-has-attachments=true]) button[data-dsh-claude-control=send]:not(:disabled):hover,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:is(:not([data-dsh-claude-draft-empty]),[data-has-attachments=true]) button[data-dsh-claude-control=send]:not(:disabled):hover{background:var(--dsw-alias-button-primary-hover)!;color:var(--dsw-static-neutral-bluish-00, #ffffff)!}|background": {
+      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline]:is(:not([data-dsh-claude-draft-empty]),[data-has-attachments=true]) button[data-dsh-claude-control=send]:not(:disabled):hover,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:is(:not([data-dsh-claude-draft-empty]),[data-has-attachments=true]) button[data-dsh-claude-control=send]:not(:disabled):hover",
+      "prop": "background",
+      "verdict": "transient state"
+    },
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline]:is(:not([data-dsh-claude-draft-empty]),[data-has-attachments=true]) button[data-dsh-claude-control=send]:not(:disabled):hover,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:is(:not([data-dsh-claude-draft-empty]),[data-has-attachments=true]) button[data-dsh-claude-control=send]:not(:disabled):hover{background:var(--dsw-alias-button-primary-hover)!;color:var(--dsw-static-neutral-bluish-00, #ffffff)!}|color": {
+      "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline]:is(:not([data-dsh-claude-draft-empty]),[data-has-attachments=true]) button[data-dsh-claude-control=send]:not(:disabled):hover,body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card]:is(:not([data-dsh-claude-draft-empty]),[data-has-attachments=true]) button[data-dsh-claude-control=send]:not(:disabled):hover",
+      "prop": "color",
+      "verdict": "transient state"
+    },
     "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline] button[data-dsh-claude-control=stop],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card] button[data-dsh-claude-control=stop]{background:transparent;color:var(--dsw-alias-label-primary, #161616);border:none!}|border": {
       "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline] button[data-dsh-claude-control=stop],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card] button[data-dsh-claude-control=stop]",
       "prop": "border",
@@ -701,7 +684,7 @@
       "prop": "background",
       "verdict": "transient state"
     },
-    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline] [data-dsh-claude-part~=row],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card] [data-dsh-claude-part~=row]{display:flex;flex-wrap:nowrap;justify-content:space-between;align-items:center;padding:0 4px;margin:6px 0 0;background:transparent;border:none!;box-shadow:none;min-height:28px;height:28px;width:100%;max-width:100%;box-sizing:border-box;overflow:visible;position:relative;z-index:3}|border": {
+    "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline] [data-dsh-claude-part~=row],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card] [data-dsh-claude-part~=row]{display:flex;flex-wrap:nowrap;justify-content:space-between;align-items:center;padding:0 64px 0 4px;margin:8px 0 0;background:transparent;border:none!;box-shadow:none;min-height:32px;height:32px;width:100%;max-width:100%;box-sizing:border-box;overflow:visible;position:relative;z-index:3}|border": {
       "selector": "body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-composer-card][data-composer-variant=inline] [data-dsh-claude-part~=row],body[data-dsh-claude-style][data-dsh-claude-composer-active] [data-dsh-claude-part~=composer-stack]:not([data-composer-variant=hero]) [data-composer-card] [data-dsh-claude-part~=row]",
       "prop": "border",
       "verdict": "transient state"
@@ -855,7 +838,7 @@
       "selector": "body[data-dsh-claude-style][data-dsh-claude-brand=claude] :is([data-dsh-claude-part~=brand-mark],[data-dsh-claude-part~=rail-mark])>*",
       "prop": "display",
       "verdict": "needed",
-      "state": "hero",
+      "state": "host palette",
       "opponents": [
         {
           "kind": "inline",
@@ -867,7 +850,7 @@
       "selector": "body[data-dsh-claude-style][data-dsh-claude-brand=claude] [data-dsh-claude-part~=brand-identity]>[data-dsh-claude-part~=brand-name]>*",
       "prop": "display",
       "verdict": "needed",
-      "state": "hero",
+      "state": "host palette",
       "opponents": [
         {
           "kind": "inline",

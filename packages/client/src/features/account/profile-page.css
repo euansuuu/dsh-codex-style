@@ -1,0 +1,304 @@
+body[data-dsh-claude-style] .dsh-claude-profile-overlay[role="dialog"] {
+  position: fixed;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  inset: 0;
+  z-index: var(--dsh-claude-layer-takeover);
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--dsh-claude-canvas, var(--dsw-alias-bg-base));
+  color: var(--dsw-alias-label-primary);
+  font-family: var(--dsw-font-family, ui-sans-serif, system-ui, sans-serif);
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-page {
+  position: relative;
+  box-sizing: border-box;
+  width: min(100%, 1080px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 68px 48px 96px;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-close {
+  position: fixed;
+  top: 48px;
+  /* Inside the content column's right edge: the window's own title-bar buttons
+     own the corner, so the reader asked for the button drawn inward. */
+  right: max(24px, calc(50% - 540px + 64px));
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 50%;
+  background: var(--dsw-specific-input-major, var(--dsw-alias-bg-base));
+  color: var(--dsw-alias-label-secondary);
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(20, 20, 19, 0.06);
+  transition: background var(--dsh-claude-timing-feedback), color var(--dsh-claude-timing-feedback);
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-close:hover,
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-button:hover {
+  background: var(--dsh-claude-hover-bg);
+  color: var(--dsw-alias-label-primary);
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-close:focus-visible,
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-button:focus-visible {
+  outline: 2px solid var(--dsw-focus-ring-color);
+  outline-offset: 2px;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 12px 0 36px;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  box-shadow: 0 0 0 6px var(--dsw-specific-input-major, var(--dsw-alias-bg-base)), 0 2px 8px rgba(20, 20, 19, 0.08);
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-name {
+  margin: 0;
+  font-family: var(--dsw-font-family, ui-sans-serif, system-ui, sans-serif);
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-subtitle {
+  margin: 12px 0 0;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* The stats band, the activity chart and the plugin list each sit on their own
+   raised card, the way the prototype reads: one surface step above the canvas,
+   a hairline, and a 16px corner. */
+body[data-dsh-claude-style] .dsh-claude-profile-stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 16px;
+  background: var(--dsw-specific-input-major, var(--dsw-alias-bg-base));
+  padding: 24px 0;
+  box-shadow: 0 1px 3px rgba(20, 20, 19, 0.03);
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 4px 12px;
+  text-align: center;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-stat + .dsh-claude-profile-stat {
+  border-left: 1px solid var(--dsw-alias-border-l1);
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-stat-value {
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 1.2;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-stat-label {
+  color: var(--dsw-alias-label-secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-section {
+  margin-top: 20px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 16px;
+  background: var(--dsw-specific-input-major, var(--dsw-alias-bg-base));
+  padding: 24px 28px 28px;
+  box-shadow: 0 1px 3px rgba(20, 20, 19, 0.03);
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-section-title {
+  margin: 0;
+  font-family: var(--dsw-font-family, ui-sans-serif, system-ui, sans-serif);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-section-note,
+body[data-dsh-claude-style] .dsh-claude-profile-status {
+  margin: 8px 0 0;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-summary {
+  margin: 10px 0 0;
+  color: var(--dsw-alias-label-primary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-chart {
+  overflow-x: auto;
+  margin-top: 18px;
+  padding-bottom: 4px;
+}
+
+/* The calendar fills the card when the week columns fit (min-width keeps the
+   scroll on a narrow window), so the month labels read across the whole row. */
+body[data-dsh-claude-style] .dsh-claude-profile-calendar {
+  width: max-content;
+  min-width: 100%;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-heatmap {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 12px);
+  grid-auto-columns: 12px;
+  gap: 4px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-day {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 9%, var(--dsh-claude-canvas, var(--dsw-alias-bg-base)));
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-day[data-level="1"] { background: color-mix(in srgb, var(--dsh-claude-data-ink) 25%, var(--dsw-alias-bg-layer-2)); }
+body[data-dsh-claude-style] .dsh-claude-profile-day[data-level="2"] { background: color-mix(in srgb, var(--dsh-claude-data-ink) 48%, var(--dsw-alias-bg-layer-2)); }
+body[data-dsh-claude-style] .dsh-claude-profile-day[data-level="3"] { background: color-mix(in srgb, var(--dsh-claude-data-ink) 72%, var(--dsw-alias-bg-layer-2)); }
+body[data-dsh-claude-style] .dsh-claude-profile-day[data-level="4"] { background: var(--dsh-claude-data-ink); }
+
+body[data-dsh-claude-style] .dsh-claude-profile-months {
+  position: relative;
+  height: 20px;
+  margin-top: 12px;
+  width: 100%;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-month {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 11px;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-legend {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-legend-label {
+  margin: 0 4px;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 11px;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-button {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 12px;
+  background: var(--dsh-claude-canvas, var(--dsw-alias-bg-base));
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dsh-claude-timing-feedback), transform var(--dsh-claude-timing-feedback);
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-icon {
+  display: grid;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--dsw-alias-state-business-tertiary);
+  color: var(--dsw-alias-state-business-primary);
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-title,
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-description {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-description {
+  color: var(--dsw-alias-label-secondary);
+  line-height: 1.5;
+}
+
+body[data-dsh-claude-style] .dsh-claude-profile-plugin-button:active { transform: scale(0.98); }
+
+body[data-dsh-claude-style][data-dsh-claude-page-under-768] .dsh-claude-profile-page { padding: 76px 20px 64px; }
+body[data-dsh-claude-style][data-dsh-claude-page-under-768] .dsh-claude-profile-close { top: 20px; right: 20px; }
+body[data-dsh-claude-style][data-dsh-claude-page-under-768] .dsh-claude-profile-header { padding-bottom: 28px; }
+body[data-dsh-claude-style][data-dsh-claude-page-under-768] .dsh-claude-profile-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; padding: 20px 0; }
+body[data-dsh-claude-style][data-dsh-claude-page-under-768] .dsh-claude-profile-stat:nth-child(odd) { border-left: 0; }
+body[data-dsh-claude-style][data-dsh-claude-page-under-768] .dsh-claude-profile-stat:last-child { grid-column: span 2; }
+body[data-dsh-claude-style][data-dsh-claude-page-under-768] .dsh-claude-profile-section { margin-top: 16px; padding: 20px; }
+body[data-dsh-claude-style][data-dsh-claude-page-under-768] .dsh-claude-profile-plugin-list { grid-template-columns: minmax(0, 1fr); }
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-dsh-claude-style] .dsh-claude-profile-close,
+  body[data-dsh-claude-style] .dsh-claude-profile-plugin-button { transition-duration: var(--dsh-claude-duration-reduced); }
+}

@@ -168,7 +168,7 @@
       r.injectInViewport = !!(viewport && inject && inject.parentElement === viewport)
       r.injectFirst = !!(viewport && viewport.firstElementChild === inject)
       r.injectRows = inject ? Array.prototype.map.call(inject.children, function (c) {
-        if (c.hasAttribute('data-dsh-claude-ban-row')) return 'header'
+        if (c.hasAttribute('data-dsh-claude-profile-row')) return 'header'
         if (c.hasAttribute('data-action-index')) return 'action'
         if (c.hasAttribute('data-embed-index')) return 'embed'
         return 'other'
@@ -221,69 +221,30 @@
       await sleep(80)
       var focused = document.activeElement
       r.focusInInjected = !!(focused && inject2 && inject2.contains(focused) && focused.tagName === 'BUTTON')
-      // The hold screen entered from the header: the overlay takes the pointer,
-      // so the row and the card it covered report a leave without the pointer
-      // moving, and with the hover preference on those leaves must neither
-      // dismiss the host menu behind the page nor — through the footer's
-      // synthetic Escape to that menu — the page itself.
-      var banEntry = document.querySelector('.dsh-claude-account-inject [data-dsh-claude-ban-row]')
-      if (banEntry) {
-        banEntry.click()
-        await sleep(80)
-        r.banOpened = document.querySelectorAll('[data-dsh-ban]').length
+      // The profile takes over the window after closing the host menu.
+      var profileEntry = document.querySelector('.dsh-claude-account-inject [data-dsh-claude-profile-row]')
+      if (profileEntry) {
+        profileEntry.click()
+        await sleep(90)
+        r.profileOpened = document.querySelectorAll('.dsh-claude-profile-overlay').length
+        r.profileName = document.querySelector('.dsh-claude-profile-name')?.textContent
+        r.profileStats = document.querySelectorAll('.dsh-claude-profile-stat').length
+        r.menuBehindProfile = accountMenuOpen()
         if (hostRow) hostRow.dispatchEvent(new MouseEvent('mouseleave'))
-        var coveredMenu = document.querySelector('body > [role="menu"]')
-        if (coveredMenu) coveredMenu.dispatchEvent(new MouseEvent('mouseleave'))
-        await sleep(300)
-        r.banSurvivesLeave = document.querySelectorAll('[data-dsh-ban]').length
-        r.menuBehindBan = accountMenuOpen()
-        // The page is the window: the dialog cap theme/chrome.css puts on every
-        // `role="dialog"` card would hold it 48px inside two edges, so the box
-        // is read once the entrance animation has settled.
-        var banRoot = document.querySelector('.dsh-claude-ban')
-        if (banRoot) {
-          await Promise.all(banRoot.getAnimations().map(function (anim) {
-            return anim.finished.catch(function () {})
-          }))
-          var banBox = banRoot.getBoundingClientRect()
-          var banStyle = getComputedStyle(banRoot)
-          r.banCover = {
-            box: [banBox.left, banBox.top, banBox.right, banBox.bottom],
+        await sleep(80)
+        r.profileSurvivesLeave = document.querySelectorAll('.dsh-claude-profile-overlay').length
+        var profileRoot = document.querySelector('.dsh-claude-profile-overlay')
+        if (profileRoot) {
+          var profileBox = profileRoot.getBoundingClientRect()
+          r.profileCover = {
+            box: [profileBox.left, profileBox.top, profileBox.right, profileBox.bottom],
             view: [window.innerWidth, window.innerHeight],
-            max: banStyle.maxWidth + ' ' + banStyle.maxHeight,
           }
         }
-        // The page leaves on its own exit: it is marked leaving at once and gone
-        // once the exit's duration has played.
-        var banDismiss = document.querySelector('.dsh-claude-ban [data-dsh-ban-dismiss]')
-        if (banDismiss) banDismiss.click()
-        r.banLeaving = document.querySelector('[data-dsh-ban][data-dsh-ban-leaving]') !== null
-        // The token as the shipped sheet spells it: the minifier writes times in
-        // whichever unit is shorter.
-        var exitToken = getComputedStyle(document.body).getPropertyValue('--dsh-claude-duration-exit').trim()
-        r.banExitMs = parseFloat(exitToken) * (/ms$/.test(exitToken) ? 1 : 1000)
-        await sleep(r.banExitMs + 80)
-        r.banAfterDismiss = document.querySelectorAll('[data-dsh-ban]').length
-        // The easter egg switched off: the row is a plain name, out of the tab
-        // order, and a press opens nothing; switched back on it is the button again.
-        var headerRow = function () {
-          var row = document.querySelector('.dsh-claude-account-inject .dsh-claude-account-popover-row')
-          return row === null ? null : { role: row.getAttribute('role'), tabindex: row.getAttribute('tabindex') }
-        }
-        window.__pushForm({ banLocale: 'off' })
-        await sleep(150)
-        r.banOff = { row: headerRow() }
-        window.__pushForm({ banLocale: 'en' })
-        await sleep(300)
-        r.banOn = { row: headerRow() }
-        window.__pushForm({ banLocale: 'off' })
-        await sleep(150)
-        var plainEntry = document.querySelector('.dsh-claude-account-inject [data-dsh-claude-ban-row]')
-        if (plainEntry) plainEntry.click()
-        await sleep(80)
-        r.banOff.opened = document.querySelectorAll('[data-dsh-ban]').length
-        window.__pushForm({ banLocale: 'en' })
-        await sleep(300)
+        document.querySelector('.dsh-claude-profile-close')?.click()
+        r.profileAfterDismiss = document.querySelectorAll('.dsh-claude-profile-overlay').length
+        r.profileFocusRestored = document.activeElement === hostRow
+        r.profileFocusNode = document.activeElement?.outerHTML?.slice(0, 160)
       }
       // Closing the host's menu (its own Escape) leaves no container behind.
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }))
@@ -317,6 +278,30 @@
         takeover: document.body.hasAttribute('data-dsh-claude-footer-takeover'),
         marked: document.querySelector('[data-dsh-claude-account-host-row]') !== null,
       }
+      // A signed-in account whose profile carries no name of its own: the row
+      // keeps the host's own label instead of the machine's user name
+      // (shared/display-name.ts). The stand-in's machine user is "Tester" and
+      // the host row reads "Ada", so the two readings are told apart.
+      var fixtureProfile = window.__dshSmokeHost.profile
+      var heldProfileName = fixtureProfile.name
+      fixtureProfile.name = null
+      window.__pushAccountFrame({ status: 'signed-out' })
+      await sleep(400)
+      window.__pushAccountFrame({ status: 'credential-stored', attempt: { phase: 'succeeded', id: 'smoke-2' } })
+      await sleep(700)
+      r.hostRowTextNoName = hostRow ? (hostRow.textContent || '').trim() : null
+      if (hostRow) hostRow.dispatchEvent(new MouseEvent('mouseenter'))
+      await sleep(300)
+      var injectNoName = document.querySelector('.dsh-claude-account-inject .dsh-claude-account-popover-name')
+      r.injectNameNoName = injectNoName ? injectNoName.textContent : null
+      if (hostRow) hostRow.dispatchEvent(new MouseEvent('mouseleave'))
+      await sleep(300)
+      // Put the fixture back, and let the profile read restore the named row.
+      fixtureProfile.name = heldProfileName
+      window.__pushAccountFrame({ status: 'signed-out' })
+      await sleep(200)
+      window.__pushAccountFrame({ status: 'credential-stored', attempt: { phase: 'succeeded', id: 'smoke-1' } })
+      await sleep(500)
     })
   })
 })()

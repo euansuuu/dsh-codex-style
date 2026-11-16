@@ -4,7 +4,7 @@
   "repository": { "zh": "在 GitHub 上打开本插件", "en": "Open the plugin on GitHub" },
   "repositoryButton": { "zh": "GitHub", "en": "GitHub" },
   "brandTitle": { "zh": "主题风格", "en": "Theme style" },
-  "brandDesc": { "zh": "品牌标识与默认配色色系。", "en": "The brand mark and its default colour family." },
+  "brandDesc": { "zh": "品牌标识、默认配色以及页面上的欢迎语与目录措辞都随所选品牌。", "en": "The brand mark, its default colours, and the words the page greets and lists with all follow the chosen brand." },
   "autoPopoverTitle": { "zh": "悬停展开弹层", "en": "Open popovers on hover" },
   "autoPopoverDesc": { "zh": "悬停于触发按钮时自动展开对应弹层。", "en": "Automatically open popovers when hovering over trigger buttons." },
   "autoPopoverOff": { "zh": "关闭", "en": "Off" },

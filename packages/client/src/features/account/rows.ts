@@ -5,18 +5,17 @@ import type { HostAccountMenu } from './host-menu'
 import { copy } from './copy'
 
 /**
- * The account rows: the header with the hold-screen easter egg, the
+ * The account rows: the header that opens the profile, the
  * self-built trigger's picture, and the self-built path's settings row.
  *
  * The footer (account-footer.ts) builds the containers and decides which
  * mount point is active (account/surface.ts); this factory builds and syncs
  * the rows that go into them. `options.hostMenu` is the host's account menu
- * (account/host-menu.ts), `options.openBan()` what a press on the header
- * does and `options.banAvailable()` whether there is an easter egg to open;
+ * (account/host-menu.ts), `options.openProfile()` opens the profile;
  * the nickname and the picture come from the identity chain
  * (packages/engine/src/host.ts).
  */
-export function createAccountRows(options: { hostMenu: HostAccountMenu, openBan(): void, banAvailable(): boolean, onChange?(): void }) {
+export function createAccountRows(options: { hostMenu: HostAccountMenu, openProfile(name: string): void, onChange?(): void }) {
   const hostMenu = options.hostMenu
 
   /**
@@ -178,16 +177,16 @@ export function createAccountRows(options: { hostMenu: HostAccountMenu, openBan(
   }
 
   /**
-   * The account header: the nickname and the hold-screen easter egg's entry.
+   * The account header: the nickname and the profile entry.
    * It is the first row of whichever container is active — the injected
    * container on the host path, the popover's own header on the self-built
    * one. The header is only a WRAPPER: the clickable strip is the inner row,
    * so the hover plate covers the name and not the divider that follows it.
-   * Whether that row is a button is the header sync's business (syncBanEntry).
+   * The header sync makes that row a keyboard reachable button.
    */
   function buildAccountHeader(username: string) {
     const header = buildElement('div', 'dsh-claude-account-popover-header')
-    header.setAttribute('data-dsh-claude-ban-row', '')
+    header.setAttribute('data-dsh-claude-profile-row', '')
 
     const rowEl = buildElement('div', 'dsh-claude-account-popover-row')
 
@@ -221,54 +220,38 @@ export function createAccountRows(options: { hostMenu: HostAccountMenu, openBan(
     return copy('accountNameFallback')
   }
 
-  /**
-   * The header's row is the easter egg's button while the easter egg is
-   * installed, and a plain name while it is switched off (or retired): no
-   * role, no stop in the tab order, no hover plate (account-footer.css).
-   */
-  function syncBanEntry(rowEl: HTMLElement) {
-    const available = options.banAvailable()
-    if (available === (rowEl.getAttribute('role') === 'button')) return
-    if (available) {
-      rowEl.setAttribute('role', 'button')
-      rowEl.setAttribute('tabindex', '0')
-      rowEl.setAttribute('aria-haspopup', 'dialog')
-    } else {
-      rowEl.removeAttribute('role')
-      rowEl.removeAttribute('tabindex')
-      rowEl.removeAttribute('aria-haspopup')
-    }
+  /** The profile entry remains a keyboard reachable button in either account surface. */
+  function syncProfileEntry(rowEl: HTMLElement, name: string) {
+    if (rowEl.getAttribute('role') !== 'button') rowEl.setAttribute('role', 'button')
+    if (rowEl.getAttribute('tabindex') !== '0') rowEl.setAttribute('tabindex', '0')
+    if (rowEl.getAttribute('aria-haspopup') !== 'dialog') rowEl.setAttribute('aria-haspopup', 'dialog')
+    const label = `${copy('profileEntry')}: ${name}`
+    if (rowEl.getAttribute('aria-label') !== label) rowEl.setAttribute('aria-label', label)
+    const title = copy('profileEntry')
+    if (rowEl.getAttribute('title') !== title) rowEl.setAttribute('title', title)
   }
 
-  /**
-   * Sync the header of the active container: the nickname and the easter
-   * egg's binding. Bound OUTSIDE the build branch so the pass that creates
-   * the container already wires the row; `__dshBanBound` keeps a later pass
-   * from binding it twice, which would open the overlay twice per click.
-   */
+  /** Sync the header's nickname and bind its profile entry once per mounted row. */
   function syncAccountHeader(root: Element | null, hostRow: Element | null) {
     if (root === null) return
     const nameEl = root.querySelector('.dsh-claude-account-popover-name')
     const username = accountDisplayName(hostRow)
     if (nameEl && nameEl.textContent !== username) nameEl.textContent = username
     const rowEl = root.querySelector<HTMLElement>('.dsh-claude-account-popover-row')
-    if (rowEl !== null) syncBanEntry(rowEl)
-    const banRow = root.querySelector<HTMLElement>('[data-dsh-claude-ban-row]')
-    if (banRow && !banRow.__dshBanBound) {
-      banRow.__dshBanBound = true
-      banRow.addEventListener('click', e => {
-        if (!options.banAvailable()) return
-        // The row's gesture is the easter egg, not a menu selection.
+    if (rowEl !== null) syncProfileEntry(rowEl, username)
+    const profileRow = root.querySelector<HTMLElement>('[data-dsh-claude-profile-row]')
+    if (profileRow && !profileRow.__dshProfileBound) {
+      profileRow.__dshProfileBound = true
+      profileRow.addEventListener('click', e => {
         e.preventDefault()
         e.stopPropagation()
-        options.openBan()
+        options.openProfile(nameEl?.textContent?.trim() || username)
       })
-      banRow.addEventListener('keydown', e => {
+      profileRow.addEventListener('keydown', e => {
         if (e.key !== 'Enter' && e.key !== ' ') return
-        if (!options.banAvailable()) return
         e.preventDefault()
         e.stopPropagation()
-        options.openBan()
+        options.openProfile(nameEl?.textContent?.trim() || username)
       })
     }
   }
@@ -321,6 +304,8 @@ export function createAccountRows(options: { hostMenu: HostAccountMenu, openBan(
   }
 
   return {
+    /** The nickname every account surface shows: the identity chain, the host's own label, the copy. */
+    displayName: () => accountDisplayName(hostMenu.trigger()),
     syncAvatar: syncAccountAvatar,
     buildHeader: buildAccountHeader,
     syncHeader: syncAccountHeader,

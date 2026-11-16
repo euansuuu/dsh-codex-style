@@ -20,8 +20,8 @@
  * file's words are copy, so they are matched in the two the document carries.
  * Everything the words are read off is the real host: the snapshot's reasoning
  * block and the call it reports in flight (D3). The head of the row is read off
- * that same row: under the Claude brand the skin's own loading dots stand where
- * the host draws its whale tail, resting on the wording's line.
+ * that same row: under the shipped DeepSeek brand the host's own whale tail
+ * stands where the skin's loader would, and the loader is not drawn at all.
  */
 import { bound } from '../bounds.mjs'
 import fs from 'node:fs'
@@ -43,62 +43,19 @@ const MIN_GAP_MS = bound('waitLineMinGapMs')
 const APP = 'const first = 1\n'
 
 /**
- * The loader's motions, each with the lane it plays in, how many dots it draws,
- * the animation its first dot runs and that animation's own turn
- * (features/chat-wait/chat-wait.css). `wait-loader.ts` hands the row over from
- * one to the next every `--dsh-claude-period-dot-rotate`, so any of the three may
- * be the one standing when the head is read; the smoke case reads the same three
- * (cases/chat.mjs).
- */
-const MOTIONS = [
-  { lane: 'is-bounce', dots: 3, animation: 'dsh-claude-wait-dot', duration: '0.5s' },
-  { lane: 'is-line', dots: 3, animation: 'dsh-claude-wait-dot-line', duration: '1.25s' },
-  { lane: 'is-orbit', dots: 4, animation: 'dsh-claude-wait-dot-orbit-1', duration: '2.4s' },
-]
-
-/**
- * The head of the running row on the real host: the skin's own loader where the
- * host draws its whale tail, which is what the Claude brand stands in for it,
- * and the seat the loader takes — the row it stands in, and the wording's own
- * line box, which the dots rest on.
+ * The head of the running row on the real host, read where the skin's loader
+ * and the host's own running icon both sit: under the shipped DeepSeek brand
+ * the icon stands and the loader is not drawn (shared/turn-activity.ts), and
+ * the Claude brand's own loader is read by the smoke case (cases/chat.mjs).
  */
 const readHead = (page) => page.evaluate(() => {
   const row = document.querySelector('[data-chat-running]')
   if (row === null) return null
   const loader = row.querySelector('.dsh-claude-chat-wait-loader')
-  // The loader carries one lane of dots per motion, of which the lane in play is
-  // the one drawn and the one whose animation is running
-  // (features/chat-wait/wait-loader.ts).
-  const lane = loader === null ? null : loader.querySelector('.dsh-claude-chat-wait-lane.is-active')
-  const dot = lane === null ? null : lane.firstElementChild
   const icon = row.querySelector('[data-dsh-claude-part~="running-icon"]')
-  const label = row.querySelector('.dsh-claude-chat-wait-label')
-  const dotStyle = dot === null ? null : getComputedStyle(dot)
-  const box = (r) => ({ top: +r.top.toFixed(1), bottom: +r.bottom.toFixed(1), height: +r.height.toFixed(1) })
-  const seat = (element) => box(element.getBoundingClientRect())
-  // The line's own text: while a wording swaps the label holds two copies, so
-  // the one standing is the last of them.
-  const copies = label === null ? [] : label.querySelectorAll('.dsh-claude-swap-copy')
-  const standing = copies.length === 0 ? label : copies[copies.length - 1]
-  let text = null
-  if (standing !== null) {
-    const range = document.createRange()
-    range.selectNodeContents(standing)
-    text = box(range.getBoundingClientRect())
-  }
   return {
-    dots: lane === null ? 0 : lane.children.length,
     shown: loader !== null && getComputedStyle(loader).display !== 'none',
-    // Which of the loader's three motions stands: the dots bounce while the
-    // turn thinks, walk their own lines while it works, or swap the corners of
-    // their own rectangle. The reading beside it is the animation that motion
-    // runs, so the two are checked against each other.
-    motion: lane === null ? '' : lane.className,
-    animation: dotStyle === null ? null : dotStyle.animationName,
-    duration: dotStyle === null ? null : dotStyle.animationDuration,
-    shadow: dotStyle === null ? null : dotStyle.boxShadow,
     iconShown: icon !== null && getComputedStyle(icon).display !== 'none',
-    seats: loader === null || text === null ? null : { row: seat(row), loader: seat(loader), text },
   }
 })
 
@@ -176,7 +133,6 @@ function waitLineScenario({ check }) {
       const gaps = seen.slice(1).map((entry, at) => entry.at - seen[at].at)
       const calls = await page.evaluate(() => window.__waitCalls ?? [])
       const head = notes.head ?? null
-      const seats = head?.seats ?? null
       // What stood between two clauses: from the first clause the line said to
       // the last. The sentence carrying no clause sits inside that stretch, and
       // only a clause may stand there — the call's own words come after the last
@@ -194,15 +150,15 @@ function waitLineScenario({ check }) {
         check('一个说法锁住一秒：状态换得再快，这一行也只一秒换一次',
           gaps.length > 0 && gaps.every((gap) => gap >= MIN_GAP_MS),
           JSON.stringify({ gaps, words })),
-        check('Claude 品牌下这一行开头换成插件自己的加载点，宿主的鲸鱼尾让位，加载点不带阴影，走的是这一轮该走的那套动作',
-          head !== null && head.shown === true && head.shadow === 'none' && head.iconShown === false &&
-            MOTIONS.some((motion) => head.motion.includes(motion.lane) && head.dots === motion.dots &&
-              head.animation === motion.animation && head.duration === motion.duration),
+        // The brand in force here is DeepSeek, the shipped default
+        // (packages/contracts/src/prefs.ts): the row's head keeps the host's
+        // own whale tail and the skin's loader is not drawn, while the words
+        // above it are still the line's own (shared/turn-activity.ts). The
+        // Claude brand's loader and its seat are read by the smoke case
+        // (cases/chat.mjs), which drives both brands on the stand-in page.
+        check('DeepSeek 品牌下这一行开头仍是宿主自己的鲸鱼尾，插件的加载点不画',
+          head !== null && head.shown === false && head.iconShown === true,
           JSON.stringify(head)),
-        check('加载点站在那一行里、落在说法的行上，不探出行外',
-          seats !== null && seats.loader.top >= seats.row.top && seats.loader.bottom <= seats.row.bottom &&
-            seats.loader.top >= seats.text.top - 2 && seats.loader.bottom <= seats.text.bottom + 2,
-          JSON.stringify(seats)),
         check('控制台没有异常', session.problems.length === 0, session.problems.slice(0, 3).join(' | ')),
       ]
     },

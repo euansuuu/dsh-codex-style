@@ -16,8 +16,10 @@
   window.__profileReads = 0
   var accountFrameQueue = []
   var accountFramePending = null
+  // The frame the installed host yields: the event type and the state it
+  // reports (contracts/account.ts). Cases hand in the state.
   window.__pushAccountFrame = function (view) {
-    var step = { done: false, value: { value: view, accept: function () {} } }
+    var step = { done: false, value: { value: { type: 'snapshot', state: view }, accept: function () {} } }
     if (accountFramePending !== null) {
       var resolve = accountFramePending
       accountFramePending = null

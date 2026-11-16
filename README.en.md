@@ -18,7 +18,7 @@
 
 ## Preview
 
-The settings page switches between the two palettes; light and dark follow the system.
+DeepSeek is the default brand: the sidebar keeps the host's own whale and the DeepSeek wordmark, buttons follow DeepSeek blue, the composer's hints stay the host's own words, and the sidebar directory reads codex's “Projects”. The settings page switches between the two palettes; light and dark follow the system.
 
 ### Claude
 

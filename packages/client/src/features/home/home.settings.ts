@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { HOME_LAYOUTS, HOME_LAYOUT_CLASSIC, HOME_LAYOUT_OFF, HOME_LAYOUT_STUDIO } from '../../constants'
+import { BRAND_DEEPSEEK, HOME_LAYOUTS, HOME_LAYOUT_CLASSIC, HOME_LAYOUT_OFF, HOME_LAYOUT_STUDIO } from '../../constants'
 import { PreviewCards } from '../../shared/preview-cards'
 import { copy } from './copy'
 import type { CopyKey } from './copy'
@@ -117,8 +117,16 @@ function sampleComposer(layout: Prefs['homeLayout']) {
   )
 }
 
-/** One layout's page in miniature, with the same content column as the real page. */
-function sample(layout: Prefs['homeLayout']) {
+/**
+ * One layout's page in miniature, with the same content column as the real page.
+ * The greeting follows the brand the way the real headline does
+ * (greeting-copy.ts): Claude's own welcomes under the Claude brand, and the
+ * host's official line under DeepSeek's.
+ */
+function sample(layout: Prefs['homeLayout'], brand: Prefs['brand']) {
+  const greeting = brand === BRAND_DEEPSEEK
+    ? copy('homeSampleHostGreeting')
+    : copy(layout === HOME_LAYOUT_STUDIO ? 'homeSampleStudioGreeting' : 'homeSampleClassicGreeting')
   return [
     React.createElement(
       'span',
@@ -130,7 +138,7 @@ function sample(layout: Prefs['homeLayout']) {
           'span',
           { className: 'dsh-claude-home-sample-headline' },
           layout === HOME_LAYOUT_OFF ? null : React.createElement('span', { className: 'dsh-claude-home-sample-mark' }),
-          words('dsh-claude-home-sample-title', copy(layout === HOME_LAYOUT_STUDIO ? 'homeSampleStudioGreeting' : 'homeSampleClassicGreeting')),
+          words('dsh-claude-home-sample-title', greeting),
         ),
         layout === HOME_LAYOUT_STUDIO ? samplePanel() : null,
         layout === HOME_LAYOUT_STUDIO ? sampleContext() : null,
@@ -145,7 +153,7 @@ function HomeLayoutPicker(props: SettingsRowView) {
   const options: PreviewOption<Prefs['homeLayout']>[] = HOME_LAYOUTS.map(layout => ({
     value: layout,
     label: copy(NAMES[layout]),
-    content: sample(layout),
+    content: sample(layout, props.prefs.brand),
     attributes: { 'data-layout': layout },
   }))
   return React.createElement(PreviewCards<Prefs['homeLayout']>, {
