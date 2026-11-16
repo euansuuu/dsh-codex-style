@@ -73,7 +73,9 @@ async function setup(t, count) {
  */
 async function pickArchived(t) {
   // The label takes no pointer of its own (workspace.css): the header under it is the hover's target.
-  await t.page.getByText('Workspaces', { exact: true }).locator('..').hover()
+  // The label is read by its part, not its words: the DeepSeek brand rewords the
+  // directory (features/workspace-words), and this page ships with it on.
+  await t.page.locator(t.surface('sidebar.section-label')).locator('..').hover()
   await t.page.getByRole('radiogroup').getByRole('radio').nth(1).click()
   await t.settle()
 }

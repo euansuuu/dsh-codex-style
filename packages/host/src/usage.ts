@@ -203,7 +203,10 @@ export function createUsage(ctx: DshContext) {
       : sessions
     // Filtering happens after the full record has been updated, so switching
     // scopes never deletes another session's fingerprint or retained history.
-    const account = allowed === null ? recorded : new Map([...recorded].filter(([id]) => allowed.has(id)))
+    // The subagent exclusion answers for retained records too: a record the
+    // exclusion predates holds a subagent's days, and every scope answers with
+    // the same main-session population the live logs carry.
+    const account = new Map([...recorded].filter(([id]) => (allowed !== null ? allowed.has(id) : !excluded.has(id))))
     const scopedLedger = scope === HOME_SESSION_SCOPE_ALL ? ledgerDays : null
     const merge = mergeLedgerFold(scopedLedger, account)
     // The source names what answered: with no ledger at all the fold is the

@@ -1,5 +1,5 @@
 import { hostRemote, hostRemoteAccount } from '@dsh-claude-style/engine/host'
-import { setAccountIdentity } from '../../shared/identity'
+import { setAccountIdentity, setAccountSignedIn } from '../../shared/identity'
 import { accountClient, forgetAccountBalance } from '../../shared/account-balance'
 import type { HostContext, HostFiber } from '@dsh-claude-style/engine/host'
 import type { HostAccountAnswer, HostAccountFrame, HostAccountService } from '@dsh-claude-style/contracts/account'
@@ -73,13 +73,19 @@ export function createAccountProfile(ctx: HostContext, onChange: () => void) {
         // `null` is the host's "no credential" — unless the stream says one
         // is stored, and then it changed while this read was out.
         if (accountState !== null && accountState !== 'signed-out') retryAccount()
-        else showAccount(null, null)
+        else {
+          setAccountSignedIn(false)
+          showAccount(null, null)
+        }
         return
       }
       const profile = result.value.profile || result.value
       // A 'failed' profile is a platform miss, not a sign-out.
       if (!profile || profile.status !== 'ready' || !profile.value) { retryAccount(); return }
       accountRetries = 0
+      // A ready profile is a stored credential: the account is the identity
+      // even while its name is empty (shared/identity.ts's precedence).
+      setAccountSignedIn(true)
       showAccount(profile.value.name || profile.value.contact || null, profile.value.avatarUrl || profile.avatarUrl || null)
     }, () => {
       if (read === accountRead) retryAccount()
@@ -96,8 +102,12 @@ export function createAccountProfile(ctx: HostContext, onChange: () => void) {
    */
   let accountState: string | null = null
   let accountSignIn: string | null = null
-  function onAccountState(view: HostAccountFrame) {
-    if (view === null || typeof view !== 'object') return
+  function onAccountState(frame: HostAccountFrame) {
+    if (frame === null || typeof frame !== 'object') return
+    // The installed host yields `{ type, state }` frames; an earlier host
+    // answered with the state alone. The state carries the credential and the
+    // attempt either way (contracts/account.ts).
+    const view = frame.state ?? frame
     const signedIn = view.status === 'credential-stored'
     const attempt = view.attempt
     if (!signedIn) accountSignIn = null
@@ -106,6 +116,7 @@ export function createAccountProfile(ctx: HostContext, onChange: () => void) {
     if (state === accountState) return
     accountState = state
     accountRetries = 0
+    setAccountSignedIn(signedIn)
     // The balance kept for the mascot's bubble was the previous account's.
     forgetAccountBalance()
     if (signedIn) {

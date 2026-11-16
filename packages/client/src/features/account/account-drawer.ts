@@ -1,6 +1,5 @@
 import { AUTO_POPOVER_OFF } from '../../constants'
 import { findSidebarRoot } from '@dsh-claude-style/engine/host'
-import { getUsername } from '../../shared/identity'
 import { readPrefs } from '../../core/prefs'
 import { POPOVER_CLOSE_DELAY, POPOVER_OPEN_DELAY, closeOtherPopovers, createHoverIntent, positionAnchoredPopover, removeStrayNodes } from '../../shared/popover'
 import type { createAccountRows } from './rows'
@@ -28,10 +27,8 @@ export function createAccountDrawer(options: {
   let settingsItem: HTMLElement | null = null
   const popoverHoverIntent = createHoverIntent(openPopover, closePopover, POPOVER_OPEN_DELAY, POPOVER_CLOSE_DELAY)
   // Whether the popover is up because it was CLICKED (rather than hovered).
-  // Clicking the account row opens the ban-screen easter egg and leaves the
-  // pointer inside the popover, so without this the row's own mouseleave
-  // would tear the popover down behind the overlay; a click-opened popover
-  // instead stays until the pointer leaves the whole footer.
+  // Clicking the trigger leaves the pointer inside the popover, so the row's
+  // mouseleave must not tear the click-opened card down behind the pointer.
   let popoverOpenedByClick = false
 
   function isPopoverOpen() {
@@ -122,7 +119,10 @@ export function createAccountDrawer(options: {
    * the orphan keeps a stale name).
    */
   function ensureSynthetic(footArea: Element) {
-    const username = getUsername()
+    // The rows' own display name: the identity chain, then the host's own
+    // account label, then the copy — never the machine's user name while an
+    // account is signed in (shared/display-name.ts).
+    const username = options.rows.displayName()
     removeStrayNodes(footArea, '.dsh-claude-account-btn', [accountBtn])
     // The popover is the skin's own card and lives in the footer's own subtree
     // (below, on the self-built path), so the sweep for a copy a client reload

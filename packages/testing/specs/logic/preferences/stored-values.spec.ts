@@ -102,10 +102,12 @@ test('the caret switch reads the retired explicit-moves tier as on', () => {
   expect(clampPrefs({ caretMotion: 'move' }).caretMotion).toBe(PREF_DEFAULTS.caretMotion)
 })
 
-test('the brand stored under its earlier name lands on its choice, anything else on Claude', () => {
+test('the brand stored under its earlier name lands on its choice, anything else on DeepSeek', () => {
+  expect(clampPrefs({}).brand).toBe(BRAND_DEEPSEEK)
+  expect(clampPrefs({ brand: BRAND_CLAUDE }).brand).toBe(BRAND_CLAUDE)
   expect(clampPrefs({ brand: BRAND_DEEPSEEK }).brand).toBe(BRAND_DEEPSEEK)
   expect(clampPrefs({ brand: BRAND_DEEPSEEK_LEGACY }).brand).toBe(BRAND_DEEPSEEK)
-  expect(clampPrefs({ brand: 'anthropic' }).brand).toBe(BRAND_CLAUDE)
+  expect(clampPrefs({ brand: 'anthropic' }).brand).toBe(BRAND_DEEPSEEK)
 })
 
 test('the hover-open preference takes its earlier boolean shape', () => {
@@ -163,7 +165,7 @@ test('a stored accent moves into the custom scheme, keeping its colour, and the 
   expect(migrated.customAccent).toBe('')
   expect(migrated.paletteColors).toBe('custom')
   expect(migrated.brandAccent).toBe('')
-  expect(migrated.paletteSchemes.map(entry => parsePaletteScheme(entry, PALETTE_PRESETS))).toEqual([{ id: 'custom', name: '', base: 'claude', accent: '#1a7f5a' }])
+  expect(migrated.paletteSchemes.map(entry => parsePaletteScheme(entry, PALETTE_PRESETS))).toEqual([{ id: 'custom', name: '', base: 'deepseek', accent: '#1a7f5a' }])
   expect(clampPrefs({ brandAccent: '#abc' }).paletteSchemes).toEqual([])
   expect(clampPrefs({ brandAccent: 'red' }).paletteSchemes).toEqual([])
   expect(clampPrefs({}).paletteColors).toBe('brand')

@@ -15,7 +15,7 @@ export const BILLING_OFF = 'off'
 /** The billing choices, in the settings' order: the two official tables, or no billing at all. */
 export const BILLING_CHOICES = [BILLING_OFF, ...CURRENCIES] as const
 
-/** Brand marks selectable from the settings page. `claude` is the default. */
+/** Brand marks selectable from the settings page. DeepSeek is the default. */
 export const BRAND_CLAUDE = 'claude'
 /** DeepSeek branding keeps the host brand area and selects the DeepSeek palette and mascot. */
 export const BRAND_DEEPSEEK = 'deepseek'
@@ -271,7 +271,7 @@ export type PrefSpec = BooleanSpec | ChoiceSpec | TextSpec | ColorSpec | ListSpe
  * clamping here keeps legacy or invalid values from preventing startup.
  */
 export const PREFS = {
-  brand: { type: 'choice', values: BRANDS, default: BRAND_CLAUDE, legacy: { [BRAND_DEEPSEEK_LEGACY]: BRAND_DEEPSEEK } },
+  brand: { type: 'choice', values: BRANDS, default: BRAND_DEEPSEEK, legacy: { [BRAND_DEEPSEEK_LEGACY]: BRAND_DEEPSEEK } },
   brandName: { type: 'text', default: '', max: BRAND_NAME_MAX },
   /** The ink of the brand's own art while the brand marks follow the theme style; a preset carries its own. */
   brandInk: { type: 'choice', values: BRAND_INKS, default: BRAND_INK_ORIGINAL },

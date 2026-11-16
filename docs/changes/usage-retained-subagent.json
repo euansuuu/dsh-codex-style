@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-16",
+  "group": "fixes",
+  "order": 0,
+  "external": false,
+  "zh": "用量汇总的保留记录不计入子代理，残留的子代理天数与现行日志同一口径排除",
+  "en": "Retained usage records keep no subagent days, so leftover subagent entries answer with the same population as the live logs"
+}

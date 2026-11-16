@@ -33,7 +33,7 @@ interface Element {
   __dshContextLineToken?: object
   /** The host's account row bound by this generation (features/account). */
   __dshHostRowToken?: object
-  __dshBanBound?: boolean
+  __dshProfileBound?: boolean
   /** A mirrored footer entry: the icon markup it carries, the host entry and the click it forwards. */
   __dshIconHtml?: string
   __dshEntry?: Element | null

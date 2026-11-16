@@ -204,7 +204,9 @@ export function createPlaceholderCopy(cards: MatchList<HTMLElement>, placeholder
         node.remove()
         continue
       }
-      const wants = owner !== null && wantsStandIn(owner)
+      // `active` carries the brand too (composer.ts's hintCover): a stand-in
+      // written under another brand leaves with the layer that drew it.
+      const wants = active && owner !== null && wantsStandIn(owner)
       // The pass right after the drawing one finds the card as the drawing did,
       // and leaves the stand-in standing; every later pass takes it back once
       // the card has moved on.

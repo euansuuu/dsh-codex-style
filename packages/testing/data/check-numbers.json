@@ -749,9 +749,6 @@
       "一个说法锁住一秒：状态换得再快，这一行也只一秒换一次": [
         0
       ],
-      "加载点站在那一行里、落在说法的行上，不探出行外": [
-        2
-      ],
       "控制台没有异常": [
         0
       ]
@@ -857,19 +854,16 @@
       "the card stays unpainted until the skin's rows are in it and the host has placed it": [
         0
       ],
-      "the hold screen opens over the menu and survives the leaves its overlay causes": [
+      "the personal profile opens from the account header and survives pointer movement": [
         1
       ],
-      "the hold screen covers the whole window: no dialog cap holds it inside two edges": [
+      "the personal profile covers the full window": [
         0,
         1,
         2,
         3
       ],
-      "the host menu stays up behind the hold screen and the screen leaves by its own control, playing its exit first": [
-        0
-      ],
-      "with the easter egg off the account row is a plain name a press does not open, and back on it is the button again": [
+      "the host account menu closes under the profile and the profile closes with its own button": [
         0
       ],
       "closing the host menu leaves no injected container behind": [
@@ -887,7 +881,7 @@
       "a repeated same-state frame reads nothing more": [
         1
       ],
-      "no feature reported a failure (line 281)": [
+      "no feature reported a failure (line 280)": [
         0
       ],
       "the skin's rail stands in the host rail's slot, one mark per turn, the host's rail hidden but laid out": [
@@ -1349,7 +1343,7 @@
       "the view tabs draw their pill under the active tab inside the plate, without sliding in": [
         0
       ],
-      "a view switch slides the pill to the newly active tab (line 152)": [
+      "a view switch slides the pill to the newly active tab (line 155)": [
         1
       ],
       "the title is handed the room up to the cluster beside it rather than the width its own box holds, and the row it left starts at the title box without the host's old inset": [

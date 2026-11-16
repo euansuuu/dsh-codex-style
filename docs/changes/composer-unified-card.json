@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-16",
+  "group": "improvements",
+  "order": 0,
+  "external": false,
+  "zh": "会话中的输入框合并为一张圆角卡片，控件移入卡片底行，发送按钮变为卡片右下角的圆形主色按钮",
+  "en": "Merge the in-conversation composer into one rounded card with its controls on the bottom line and a round brand-coloured send button in the lower right corner"
+}

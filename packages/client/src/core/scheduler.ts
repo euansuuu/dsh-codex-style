@@ -34,6 +34,7 @@ export interface Handles {
   footer: FooterHandle
   ban: BanHandle
   workspace: FeatureHandle
+  workspaceWords: FeatureHandle
   search: FeatureHandle
   sidebarPeek: FeatureHandle
   sidebarStatus: FeatureHandle

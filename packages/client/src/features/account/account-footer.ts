@@ -1,10 +1,11 @@
 import { ACCOUNT_ARMED_ATTR, AUTO_POPOVER_OFF } from '../../constants'
-import { findFootArea, findHostModal } from '@dsh-claude-style/engine/host'
+import { findFootArea, findHostModal, hostPluginNavigation, profileBundles } from '@dsh-claude-style/engine/host'
 import { readPrefs } from '../../core/prefs'
 import { createFooterMirror } from './footer-mirror'
 import { createHostAccountMenu } from './host-menu'
 import { createHostMenuPlacement } from './menu-placement'
 import { createAccountProfile } from './profile'
+import { createAccountProfilePage } from './profile-page'
 import { createAccountRows } from './rows'
 import { createAccountSurface } from './surface'
 import type { AccountSurfaceMode } from './surface'
@@ -32,7 +33,7 @@ export interface FooterHandle extends FeatureHandle {
  * injected into the host's own account menu; on a host without one (Web)
  * the skin self-builds the trigger and the popover (account/account-drawer.ts)
  * and the popover's body is the container. The rows themselves — the account
- * header with the hold-screen easter egg, the plugin footer entries
+ * header with the personal profile entry, the plugin footer entries
  * (account/footer-mirror.ts) and, on the self-built path only, the settings
  * row — are shared.
  *
@@ -77,6 +78,20 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
   }
 
   const hostMenu = createHostAccountMenu({ close: () => drawer.close() })
+  let selectedProfileName = ''
+  const profilePage = createAccountProfilePage({
+    displayName: () => selectedProfileName,
+    returnFocus: () => hostMenu.trigger() ?? drawer.btn(),
+    loadPlugins() {
+      const bundles = hostPluginNavigation(ctx) ? profileBundles(ctx) : null
+      return bundles?.then(items => items.map(item => ({
+        name: item.name,
+        title: typeof item.meta?.title === 'string' ? item.meta.title : item.name,
+        description: typeof item.meta?.description === 'string' ? item.meta.description : item.description,
+      }))) ?? null
+    },
+    openPlugin(name) { hostPluginNavigation(ctx).openBundle(name) },
+  })
   // The host's own card, placed where the host meant it (features/account/
   // menu-placement.ts): its placement is the same at every page scale, and the
   // host writes its own over the skin's on later frames.
@@ -88,17 +103,11 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     onChange() {
       if (typeof ui.schedule === 'function') ui.schedule()
     },
-    openBan() {
-      // Leave the surface up: the overlay is a full-window surface, so what
-      // is behind it does not matter, and the footer is left as the user
-      // had it once the screen is dismissed.
-      drawer.holdOpen()
-      if (ui.ban) ui.ban.open()
-    },
-    // The handle is there exactly while the easter egg is installed: its
-    // language switch is on, its chunk has arrived and it has not retired.
-    banAvailable() {
-      return ui.ban !== undefined
+    openProfile(name) {
+      // Preserve the label the reader pressed even if the host has no profile record (D43).
+      selectedProfileName = name
+      closeSurface()
+      profilePage.open()
     },
   })
   /**
@@ -477,9 +486,15 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
    * label back.
    */
   function syncHostRowName(row: Element) {
-    // Nothing resolved: the host's own label is the only name there is.
+    // Nothing resolved: the host's own label is the only name there is. A
+    // signed-in account with no name of its own resolves to nothing, and the
+    // host's own label — its signed-in words — is the one the reader expects
+    // there, so a name the skin wrote on an earlier pass goes back.
     const name = resolveDisplayName()
-    if (name === '') return
+    if (name === '') {
+      restoreHostRowName(row)
+      return
+    }
     const node = hostRowLabelNode(row)
     if (node === null) return
     const label = (node.nodeValue || '').trim()
@@ -634,6 +649,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     }
   }
   return () => {
+    profilePage.dispose()
     profile.stop()
     unregisterPopover('account')
     mirror.stop()

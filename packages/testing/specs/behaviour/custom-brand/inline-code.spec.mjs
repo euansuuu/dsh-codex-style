@@ -11,8 +11,10 @@ import { spec } from '../../fixtures/behaviour.mjs'
 
 export default spec({ page: 'chat-fold' }, ({ test }) => {
   for (const scheme of ['light', 'dark']) {
-    test('the earlier warm-ink choice becomes the Claude override and a reader scheme keeps its own colour in ' + scheme, async t => {
-      await t.prefs({ palette: 'claude', paletteColors: 'brand', inlineCodeColor: 'palette', paletteSchemes: [], customCode: '' })
+    test('classic warm ink and custom-card precedence in ' + scheme, async t => {
+      // The classic ink is the Claude card's, and the page ships on the DeepSeek
+      // brand: the test stands on Claude before reading any colour.
+      await t.prefs({ brand: 'claude', palette: 'claude', paletteColors: 'brand', inlineCodeColor: 'palette', paletteSchemes: [], customCode: '' })
       await t.page.evaluate(({ dark, enabled }) => document.body.toggleAttribute(dark, enabled), {
         dark: t.host('shell.dark-theme'), enabled: scheme === 'dark',
       })

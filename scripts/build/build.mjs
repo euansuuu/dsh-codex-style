@@ -142,7 +142,7 @@ const CONSTANTS = (() => {
     if (module[name] === undefined) throw new Error(`build: ${file} exports no ${name}`)
     return [name, module[name]]
   }))
-  const { BRAND_ATTR, BRAND_DEEPSEEK, BRAND_DEFAULT_PRESETS, BRANDS, COMPOSER_ATTR, CUSTOM_EDGES_ATTR, PALETTE_ATTR, PALETTE_CARD_ATTR, PALETTE_CLAUDE, PALETTE_EDGES, PALETTE_HOST, PALETTE_PRESETS, TYPEFACE_ATTR, TYPEFACE_CLAUDE, TYPEFACE_HOST, TYPEFACE_SYSTEM } = pick(constants, constantsFile, ['BRAND_ATTR', 'BRAND_DEEPSEEK', 'BRAND_DEFAULT_PRESETS', 'BRANDS', 'COMPOSER_ATTR', 'CUSTOM_EDGES_ATTR', 'PALETTE_ATTR', 'PALETTE_CARD_ATTR', 'PALETTE_CLAUDE', 'PALETTE_EDGES', 'PALETTE_HOST', 'PALETTE_PRESETS', 'TYPEFACE_ATTR', 'TYPEFACE_CLAUDE', 'TYPEFACE_HOST', 'TYPEFACE_SYSTEM'])
+  const { BRAND_ATTR, BRAND_DEEPSEEK, BRAND_DEFAULT_PRESETS, BRANDS, COMPOSER_ATTR, CUSTOM_EDGES_ATTR, PALETTE_ATTR, PALETTE_CARD_ATTR, PALETTE_CLAUDE, PALETTE_EDGES, PALETTE_HOST, PALETTE_PRESETS, PREF_DEFAULTS, TYPEFACE_ATTR, TYPEFACE_CLAUDE, TYPEFACE_HOST, TYPEFACE_SYSTEM } = pick(constants, constantsFile, ['BRAND_ATTR', 'BRAND_DEEPSEEK', 'BRAND_DEFAULT_PRESETS', 'BRANDS', 'COMPOSER_ATTR', 'CUSTOM_EDGES_ATTR', 'PALETTE_ATTR', 'PALETTE_CARD_ATTR', 'PALETTE_CLAUDE', 'PALETTE_EDGES', 'PALETTE_HOST', 'PALETTE_PRESETS', 'PREF_DEFAULTS', 'TYPEFACE_ATTR', 'TYPEFACE_CLAUDE', 'TYPEFACE_HOST', 'TYPEFACE_SYSTEM'])
   return {
     // The gate attributes css.mjs stamps and writes the token blocks under: who paints
     // the colours and who sets the type (D97), the composer preference and the brand's blocks (D9).
@@ -157,6 +157,8 @@ const CONSTANTS = (() => {
     brands: BRANDS,
     presets: PALETTE_PRESETS,
     brandDefaults: BRAND_DEFAULT_PRESETS,
+    /** The card the brand in force paints by default (the brand preference's own default). */
+    defaultCard: BRAND_DEFAULT_PRESETS[PREF_DEFAULTS.brand],
     ...pick(sheets, sheetsFile, ['CRAB_SHEETS', 'CRAB_GUTTER', 'DEEPY_SHEETS', 'DEEPY_SCALE', 'DEEPY_GUTTER', 'WHALE_GIRL_SHEETS']),
     featureSheets: pick(constants, constantsFile, FEATURE_SHEET_CONSTANTS),
   }
@@ -336,7 +338,7 @@ async function main() {
   // cloud hands the end-to-end lane.
   fs.mkdirSync(path.join(ROOT, 'lib', 'audit'), { recursive: true })
   fs.writeFileSync(path.join(ROOT, 'lib', 'audit', 'importance-sheet.css'), css.authored)
-  if (writeTokenTable(STYLE_GUIDE, tokenDoc)) console.log('built docs/STYLE.md token table from packages/client/src/theme/tokens.json')
+  if (writeTokenTable(STYLE_GUIDE, tokenDoc, CONSTANTS.defaultCard)) console.log('built docs/STYLE.md token table from packages/client/src/theme/tokens.json')
   if (writeMotionTable(STYLE_GUIDE, tokenDoc)) console.log('built docs/STYLE.md motion table from packages/client/src/theme/tokens.json')
   if (writeLayerTable(STYLE_GUIDE, tokenDoc)) console.log('built docs/STYLE.md layer table from packages/client/src/theme/tokens.json')
 

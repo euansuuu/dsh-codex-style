@@ -85,6 +85,7 @@
   "homeHeatTipTokens": { "zh": "{date} — {tokens} Token", "en": "{date} — {tokens} tokens" },
   "homeSampleClassicGreeting": { "zh": "晚上好，Ada", "en": "Good evening, Ada" },
   "homeSampleStudioGreeting": { "zh": "接下来做什么，Ada？", "en": "What’s up next, Ada?" },
+  "homeSampleHostGreeting": { "zh": "探索未至之境", "en": "Into the Unknown" },
   "homeSampleWorkspace": { "zh": "demo-project", "en": "demo-project" },
   "homeSamplePermission": { "zh": "标准模式", "en": "Standard" },
   "homeSamplePrompt": { "zh": "今天需要我帮什么？", "en": "How can I help you today?" },

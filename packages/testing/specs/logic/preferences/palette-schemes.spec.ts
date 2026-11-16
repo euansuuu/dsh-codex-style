@@ -94,7 +94,7 @@ test('the earlier custom card carries in as the scheme custom: one code colour f
 })
 
 test('the custom card selected with no colour picked carries in as a scheme with nothing of its own; unselected and unpicked, nothing is carried in', () => {
-  expect(clampPrefs({ paletteColors: 'custom' }).paletteSchemes).toEqual(['{"id":"custom","base":"claude"}'])
+  expect(clampPrefs({ paletteColors: 'custom' }).paletteSchemes).toEqual(['{"id":"custom","base":"deepseek"}'])
   expect(clampPrefs({}).paletteSchemes).toEqual([])
   expect(clampPrefs({ paletteColors: 'claude' }).paletteSchemes).toEqual([])
 })

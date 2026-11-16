@@ -87,18 +87,18 @@ export default {
     // (chat-follow.ts's startSlide).
     const burst = follow.burst || []
     const burstSteps = walkedSteps(burst, AT_END_PX)
-    // The slide runs for its own 240ms; how many of its positions the probe can
-    // read follows the machine's frame cadence, and a loaded one leaves two
-    // sampled steps. What a jump would leave is one step covering the whole
-    // carried stretch, so the check asks for at least two steps and no step
-    // near the whole distance.
+    // Each frame's own move, in the reading's own units. A jump covers the
+    // whole carried stretch in one of them; a slide walks it in many, none
+    // near the whole. The step is read as the drop between two frames, not as
+    // the second frame's own reading: a reading taken one refresh after the
+    // slide starts still stands near the start whatever the curve, and the
+    // frame's cadence belongs to the display rather than to the slide.
+    const burstDrops = burst.slice(1).map((offset, at) => Math.round((burst[at] - offset) * 10) / 10)
     check('a burst is slid from the stretch a slide carries instead of jumping whole',
       burst.length >= bound('followSlideMinFrames') && burst[0] > bound('followSlideStartPx') &&
         burst.every((offset, at) => at === 0 || offset <= burst[at - 1]) && burst[burst.length - 1] <= AT_END_PX &&
-        // A jump leaves no distinct intermediate reading and covers the whole
-        // distance in one step; a slide leaves one and never covers it whole.
-        burstSteps.length >= 1 && Math.max(...burstSteps.map((step) => step.gap)) < burst[0] * 9 / 10,
-      JSON.stringify({ readings: burst.length, start: burst[0], end: burst[burst.length - 1], steps: burstSteps.map((step) => step.gap) }))
+        burstSteps.length >= 1 && Math.max(...burstDrops) < burst[0] * 9 / 10,
+      JSON.stringify({ readings: burst.length, start: burst[0], end: burst[burst.length - 1], steps: burstSteps.map((step) => step.gap), drops: burstDrops }))
     // The slide restarts from where the frame before it stood, and one growth is
     // all the distance it may be left carrying, the tail of the slide still
     // running when the next piece lands aside: a run of small growths, each

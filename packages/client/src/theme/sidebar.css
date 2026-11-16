@@ -22,7 +22,7 @@ body[data-dsh-claude-style][data-dsh-claude-brand="claude"] :is([data-dsh-claude
   background-size: contain;
 }
 
-/* Claude (default): starburst mark + the Claude wordmark. The mask values are
+/* Claude: starburst mark + the Claude wordmark. The mask values are
    the shared ones (shared/masked.css). */
 body[data-dsh-claude-style][data-dsh-claude-brand="claude"] :is([data-dsh-claude-part~="brand-mark"], [data-dsh-claude-part~="rail-mark"])::before {
   width: 18px;

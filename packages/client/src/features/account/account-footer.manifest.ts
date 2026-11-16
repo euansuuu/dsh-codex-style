@@ -8,6 +8,7 @@ export default {
   pref: 'collapseFooter',
   stylesheets: [
     { file: 'account-footer.css', rank: 240 },
+    { file: 'profile-page.css', rank: 245 },
     { file: 'footer-takeover.css', rank: 290 },
   ],
   settingsRows: [{

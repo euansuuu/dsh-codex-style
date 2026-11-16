@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-15",
+  "group": "improvements",
+  "order": 1,
+  "external": false,
+  "zh": "品牌默认改为 DeepSeek，侧栏与新会话页用宿主自己的鲸鱼与 DeepSeek 文字标志，配色与按钮跟随 DeepSeek 官方蓝，吉祥物默认是像素鲸鱼 Deepy，左侧目录按 codex 的叫法写「项目」与「展开显示」，这一档下保留宿主自己的官方标题与输入框提示",
+  "en": "Make DeepSeek the default brand, keeping the host's own whale and the DeepSeek wordmark in the sidebar and on the new-session page, following DeepSeek blue for the palette and every button, standing Deepy the pixel whale on the composer, reading codex's “Projects” and “Show all” in the sidebar directory, and leaving the host's own official headline and composer hints in place under that brand"
+}

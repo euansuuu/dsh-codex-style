@@ -12,6 +12,12 @@
     // region, a divider, and a content span holding the whale and its words.
     // The fixture's running turn started 65 s ago and is still reasoning.
     await probe.onlyFor(['chat-wait'], async function () {
+      // The words and the loader this case walks first are the Claude brand's
+      // own (shared/turn-activity.ts); the page ships on the DeepSeek brand, so
+      // it stands on Claude first. The DeepSeek brand's own word and whale tail
+      // are pushed for further down.
+      window.__pushForm({ brand: 'claude' })
+      await probe.nextPass('the Claude brand to take the page')
       // The running row stands in the host's conversation anchor, where the
       // skin reads its chat parts (D3). The content span carries the host's own
       // local class name, so the pass writes `running-content` onto it: that

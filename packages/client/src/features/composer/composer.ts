@@ -1,4 +1,4 @@
-import { COMPOSER_ATTR, COMPOSER_HIDDEN_ATTR, HOME_LAYOUT_STUDIO, MOBILE_PORTRAIT_ATTR, PART_ATTR, STAMPED_PART_ATTR, TRANSCRIPT_ATTR } from '../../constants'
+import { COMPOSER_ATTR, COMPOSER_HIDDEN_ATTR, BRAND_CLAUDE, HOME_LAYOUT_STUDIO, MOBILE_PORTRAIT_ATTR, PART_ATTR, STAMPED_PART_ATTR, TRANSCRIPT_ATTR } from '../../constants'
 import { COMPOSER_ATTACHMENT_RAIL_SELECTOR, COMPOSER_CARD_SELECTOR, COMPOSER_FILE_INPUT_SELECTOR, COMPOSER_INPUT_SELECTOR, COMPOSER_VARIANT_ATTRIBUTE, CONVERSATION_VIEW_CONTEXT, CONVERSATION_VIEW_STATS, CONVERSATION_VIEW_TRAJECTORY, MOBILE_PORTRAIT_SELECTOR, PERMISSION_TRIGGER_SELECTOR, PHASE_ATTRIBUTE, SIDEBAR_CHAT_SELECTOR } from '@dsh-claude-style/contracts/dom'
 import { subscribeMutations } from '@dsh-claude-style/engine/bus'
 import { requestFrame } from '@dsh-claude-style/engine/frame'
@@ -76,7 +76,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
    * the settle waits for the frame after it.
    */
   const onCompositionEnd = () => {
-    requestFrame({ write() { placeholderCopy.settle(hero, active) } })
+    requestFrame({ write() { placeholderCopy.settle(hero, hintCover()) } })
   }
   document.addEventListener('compositionend', onCompositionEnd, true)
 
@@ -95,6 +95,18 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     const scope = readPrefs().composerScope
     active = !composerRestyleRetired && (scope === 'all' || (hero ? scope === 'hero' : scope === 'conversation'))
     studioHome = hero && readPrefs().homeLayout === HOME_LAYOUT_STUDIO
+  }
+
+  /**
+   * Whether the idle hint carries this skin's own words: the restyle's own
+   * scope, and the Claude brand. The hint's words belong to the brand the way
+   * the hero's greeting does (greeting-copy.ts): DeepSeek keeps the host's
+   * own official sentences, so the whole hint layer — the rewrites and the
+   * synthetic stand-ins alike — stands down under that brand and hands the
+   * card's words back to the host.
+   */
+  function hintCover() {
+    return active && readPrefs().brand === BRAND_CLAUDE
   }
 
   /**
@@ -361,7 +373,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     syncAttachments(found)
     // Before the draft mark: the hint the skin adds is part of what "empty"
     // means to the stylesheet's `card:has(placeholder)` rules.
-    placeholderCopy.sync(hero, active)
+    placeholderCopy.sync(hero, hintCover())
     syncDraftState(found)
     syncControls(found)
     responsive.sync(found, active)
@@ -499,7 +511,7 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
     },
     /** A composer input: refresh the hint. */
     onInput() {
-      placeholderCopy.onInput(hero, active)
+      placeholderCopy.onInput(hero, hintCover())
     },
     onPointerDown: focusEditorOnPress,
     onKey: openFilePicker,

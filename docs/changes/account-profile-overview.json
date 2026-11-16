@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-15",
+  "group": "new",
+  "order": 0,
+  "external": false,
+  "zh": "账户弹层的姓名入口打开个人资料页面，展示真实账户昵称、本机历史 Token 用量及按月份标注的年度活动记录；未使用日期显示灰色，任务时长没有数据时明确标注",
+  "en": "Open a personal profile from the account menu name, showing the account name, locally recorded token usage and a year of activity with month labels and gray unused days; clearly mark task duration when it is unavailable"
+}

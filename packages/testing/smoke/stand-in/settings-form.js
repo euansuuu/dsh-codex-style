@@ -23,7 +23,14 @@
   var launcherCase = LAUNCHER[CASE] !== undefined
   var username = CASE === 'markup' ? MARKUP : CASE === 'desktop' || launcherCase ? '' : 'Tester'
   var formListeners = []
-  var formValue = { username: username, collapseFooter: true, homeLayout: CASE === 'studio' ? 'studio' : 'classic', brand: CASE === 'deepy' ? 'off' : undefined }
+  // The deepy case stores the DeepSeek brand under its earlier value ("off").
+  // The custom-brand case reads the Claude brand's own art and accent, the studio
+  // case its crab on the hero card, and the permissions-locale case the skin's
+  // own words in the hint, so those stand on that brand; every other case starts
+  // on the shipped default.
+  var claudeCases = ['custom-brand', 'studio', 'permissions-locale']
+  var brandStart = CASE === 'deepy' ? 'off' : claudeCases.indexOf(CASE) === -1 ? undefined : 'claude'
+  var formValue = { username: username, collapseFooter: true, homeLayout: CASE === 'studio' ? 'studio' : 'classic', brand: brandStart }
   // The crab-states case picks the crab, whose states it walks through; the
   // whalegirl case picks her, whose sheets it reads.
   if (CASE === 'crab-states') formValue.mascot = 'crab'

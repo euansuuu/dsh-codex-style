@@ -77,6 +77,9 @@ export default {
         greeting.held === greeting.low && typeof greeting.high === 'string' && greeting.high !== 'Host greeting' &&
         greeting.high !== greeting.low,
       JSON.stringify(greeting))
+    check('the DeepSeek brand, the shipped default, keeps the host\'s own headline where the Claude brand writes its welcome',
+      greeting.hostLine === 'Host greeting' && greeting.hostLineHeld === 'Host greeting',
+      JSON.stringify({ hostLine: greeting.hostLine, held: greeting.hostLineHeld }))
     check('the classic hero draws the permission segments in the card\'s mode strip',
       JSON.stringify(r.classicSegments) === JSON.stringify(['Read', 'Edit', 'Auto', 'Yolo']) && r.classicPermTrigger === false,
       JSON.stringify({ segments: r.classicSegments, trigger: r.classicPermTrigger }))
@@ -307,6 +310,8 @@ export default {
       JSON.stringify({ drawer: r.drawer, header: r.syntheticHeader }))
     check('synthetic path injects nothing into a host menu', r.syntheticInject === 0, `${r.syntheticInject} containers`)
     check('a custom nickname outranks the signed-in profile', r.accountUser === 'Tester', JSON.stringify(r.accountUser))
+    check('without the reader\'s own nickname the account\'s name stands on the row, not the machine\'s user',
+      r.accountUserNoCustom === 'Ada', JSON.stringify(r.accountUserNoCustom))
     check('avatar is an <img> sent without a referrer', r.photo !== null && r.photo.referrerPolicy === 'no-referrer', JSON.stringify(r.photo))
     check('the self-built drawer matches the account row box',
       r.syntheticBox !== null && r.syntheticBox.popoverLeft === r.syntheticBox.buttonLeft &&

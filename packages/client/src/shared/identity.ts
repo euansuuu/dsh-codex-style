@@ -1,8 +1,13 @@
 import { HDSL_ROUTE, HDSL_SKIN_ROUTE, USERNAME_MAX, USERNAME_ROUTE } from '../constants'
 import { readPrefs } from '../core/prefs'
 import { createHostResource } from '@dsh-claude-style/engine/resource'
+import { pickDisplayName } from './display-name'
 
-/** Identity precedence is custom name, account, launcher, cached OS probe, fresh probe; missing avatar shows the brand (D75). */
+/**
+ * Identity precedence is custom name, account, launcher, then the machine's user
+ * name only on a host with no account signed in; missing avatar shows the brand
+ * (D75).
+ */
 export let accountName = ''
 export let accountAvatar = ''
 
@@ -10,6 +15,17 @@ export let accountAvatar = ''
 export function setAccountIdentity(name: unknown, avatar: unknown) {
   accountName = typeof name === 'string' ? name.trim() : ''
   accountAvatar = typeof avatar === 'string' ? avatar : ''
+}
+
+/**
+ * Whether the host reports a stored account credential. While it does, the
+ * account is the identity: a nameless profile resolves to nothing (the host's
+ * own label shows) instead of the machine's user name.
+ */
+let accountSignedIn = false
+
+export function setAccountSignedIn(value: boolean) {
+  accountSignedIn = value
 }
 
 /**
@@ -77,12 +93,13 @@ export function loadHdsl() {
 
 /** The nickname every skin surface shows, or '' when nothing resolved. */
 export function resolveDisplayName() {
-  const custom = readPrefs().username
-  if (custom) return custom
-  if (accountName) return accountName
-  if (hdslName) return hdslName
-  if (probedUsername) return probedUsername
-  return usernameFromHost
+  return pickDisplayName({
+    custom: readPrefs().username,
+    account: accountName,
+    launcher: hdslName,
+    signedIn: accountSignedIn,
+    osName: probedUsername || usernameFromHost,
+  })
 }
 
 export function getUsername() {
@@ -109,4 +126,5 @@ export function resetIdentity() {
   hdslAvatar = false
   accountName = ''
   accountAvatar = ''
+  accountSignedIn = false
 }

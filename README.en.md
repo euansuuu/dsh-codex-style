@@ -16,7 +16,7 @@
 
 ## Preview
 
-Switch between the Claude and DeepSeek brands in settings; light and dark follow the system. Appearance offers six colour presets — Claude, DeepSeek, Parchment, Forest, Dusk and Rose — lets you edit them, and lets you create, duplicate, rename and delete colour schemes.
+DeepSeek is the default brand: the sidebar keeps the host's own whale and the DeepSeek wordmark, buttons follow DeepSeek blue, the composer's hints stay the host's own words, and the sidebar directory reads codex's “Projects”. Switch between the Claude and DeepSeek brands in settings; light and dark follow the system. Appearance offers six colour presets — Claude, DeepSeek, Parchment, Forest, Dusk and Rose — lets you edit them, and lets you create, duplicate, rename and delete colour schemes.
 
 ### Claude
 
