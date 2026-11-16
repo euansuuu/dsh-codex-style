@@ -209,7 +209,9 @@ body[data-dsh-claude-style] [data-composer-card] [data-dsh-claude-part~="attachm
 body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] > [data-composer-input],
 body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-composer-variant="hero"]) [data-composer-card] > [data-composer-input] {
   min-height: 68px;
-  padding: 0 14px;
+  /* The top inset sets the hint's distance from the card's top: the host's
+     hint rides the grow wrapper's top, the same line the typed text takes. */
+  padding: 10px 14px 0;
 }
 body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [data-input-scroll],
 body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] {
@@ -225,7 +227,7 @@ body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-c
   max-width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0 14px;
+  padding: 10px 14px 0;
   margin: 0;
   position: relative;
   z-index: 2;
@@ -254,7 +256,9 @@ body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-c
   border-color: var(--dsw-alias-state-business-primary) !important;
 }
 body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [data-input-scroll] [data-dsh-claude-part~="input-grow"],
-body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] [data-dsh-claude-part~="input-grow"] {
+body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-input-scroll] [data-dsh-claude-part~="input-grow"],
+body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] > [data-dsh-claude-part~="input-grow"],
+body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-composer-variant="hero"]) [data-composer-card] > [data-dsh-claude-part~="input-grow"] {
   width: 100%;
   max-width: 100%;
   min-height: 24px;
@@ -504,7 +508,9 @@ body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-c
 }
 body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] button[data-dsh-claude-control="commands"],
 body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-composer-variant="hero"]) [data-composer-card] button[data-dsh-claude-control="commands"] {
-  order: 3;
+  /* The add button leads the tools line, before the permission pill, the way
+     the Codex composer reads. */
+  order: -1;
   width: 24px;
   height: 24px;
   border-radius: 6px;
