@@ -1,22 +1,28 @@
 <div align="center">
 
-# DSH Claude Style
+# DSH Codex Style
 
-**A theme plugin that brings the look and feel of Claude Code Desktop to the DeepSeek Harness Web GUI.**
+**A theme plugin that brings the look and feel of the OpenAI Codex desktop app to the DeepSeek Harness Web GUI, modified from [dsh-claude-style](https://github.com/Nwflower/dsh-claude-style).**
 
-> **Why settle for another Claude Code when your next Claude Code Desktop is here.**
+> **Why settle for another Codex when your next Codex desktop is here.**
 
 [![English](https://img.shields.io/badge/lang-English-blue.svg)](README.en.md)
 [![简体中文](https://img.shields.io/badge/lang-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-red.svg)](README.md)
-[![version](https://img.shields.io/npm/v/dsh-claude-style?style=flat&label=version&color=D97757)](https://www.npmjs.com/package/dsh-claude-style)
-[![downloads](https://img.shields.io/npm/dm/dsh-claude-style?style=flat&label=downloads&color=D97757)](https://www.npmjs.com/package/dsh-claude-style)
-[![GitHub stars](https://img.shields.io/github/stars/Nwflower/dsh-claude-style?style=flat&label=%E2%98%85&color=08C)](https://github.com/Nwflower/dsh-claude-style)
 
 </div>
 
 ## Preview
 
 DeepSeek is the default brand: the sidebar keeps the host's own whale and the DeepSeek wordmark, buttons follow DeepSeek blue, the composer's hints stay the host's own words, and the sidebar directory reads codex's “Projects”. Switch between the Claude and DeepSeek brands in settings; light and dark follow the system. Appearance offers six colour presets — Claude, DeepSeek, Parchment, Forest, Dusk and Rose — lets you edit them, and lets you create, duplicate, rename and delete colour schemes.
+
+### What this fork changes
+
+This repository keeps every feature of the upstream plugin and makes four changes on top:
+
+- **Codex-style composer**: the text field and its controls merge into one rounded card, the add button leads the permission control, and the send button becomes a round brand-coloured button in the card's lower right corner. Crowded layouts stay on the upstream responsive mechanism.
+- **Personal profile**: the name in the account popover opens a profile page with this machine's token usage, active days, a year of activity and the installed plugins.
+- **DeepSeek is the default brand**: without touching any preference, the page presents DeepSeek's own logo, palette and copy.
+- **Configurable session words**: the wording of the process rows and the waiting line is adjustable in the preferences.
 
 ### Claude
 
@@ -65,18 +71,13 @@ DeepSeek is the default brand: the sidebar keeps the host's own whale and the De
 
 ## Installation
 
-From the official plugin page add the package below, or from a terminal:
-
-```
-dsh-claude-style
-```
+Install this repository from a terminal:
 
 ```bash
-dsh plugin --profile web add dsh-claude-style                    # npm package (recommended)
-dsh plugin --profile web add Nwflower/dsh-claude-style#dist      # GitHub release branch
+dsh plugin --profile web add euansuuu/dsh-codex-style
 ```
 
-Also available from the [plugin market](https://github.com/dsh-market/dsh-market) or the Skin Center of dsh-web-all. Keep one theme enabled at a time; dsh ≥ 0.2.2-rc.1 is required, and restart DeepSeek Harness after installing.
+The plugin shares its package name with the upstream npm package (`dsh-claude-style`), so the two cannot be installed at the same time: installing this repository over the upstream npm package replaces the plugin of the same name. Keep one theme enabled at a time; dsh ≥ 0.2.2-rc.1 is required, and restart DeepSeek Harness after installing.
 
 ## Declarative appearance configuration
 
@@ -123,7 +124,7 @@ modelOrderRows:
 
 ## Fonts
 
-> The Anthropic fonts have no public release; this repository only offers [copies](https://github.com/Nwflower/dsh-claude-style/tree/master/packages/assets/src/fonts/anthropic) for download and study.
+> The Anthropic fonts have no public release; this repository only offers [copies](https://github.com/euansuuu/dsh-claude-style/tree/master/packages/assets/src/fonts/anthropic) for download and study.
 
 To enable them, install the `.ttf` files on your system, or copy them into `$DSH_HOME/dsh-claude-style/fonts/` (takes effect after a reload).
 
@@ -145,6 +146,7 @@ The Sodium rendering engine is licensed under the [PolyForm Shield License 1.0.0
 
 ## Acknowledgements
 
+- This repository is a modification of [Nwflower/dsh-claude-style](https://github.com/Nwflower/dsh-claude-style): every feature, the architecture and the tests come from the upstream repository, and the Codex-style parts are adjustments made on top of it.
 - "Sodium" (钠) is named after Minecraft's [Sodium](https://github.com/CaffeineMC/sodium) rendering mod; this plugin is not affiliated with it.
 - The message navigator follows SherUnlocked-4869's [dsh-plugin-msg-nav](https://github.com/SherUnlocked-4869/dsh-plugin-msg-nav) (MIT).
 - The animation frames of Deepy the pixel whale come from the Deepy whale theme pack drawn by calmly-eating-bugs ([@wp3171216237](https://github.com/wp3171216237)), and ship with the plugin by the author's permission; GIFs of all 20 animations are in [docs/gifs/](docs/gifs/).
@@ -154,8 +156,4 @@ The Sodium rendering engine is licensed under the [PolyForm Shield License 1.0.0
 
 ## Related projects
 
-> Want to import your Claude Code / Codex session history into DSH and keep the conversation going? Try the author's other plugin, [dsh-chat-import](https://github.com/Nwflower/dsh-chat-import).
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Nwflower/dsh-claude-style&type=Date)](https://star-history.com/#Nwflower/dsh-claude-style&Date)
+> Want to import your Claude Code / Codex session history into DSH and keep the conversation going? Try the upstream author's other plugin, [dsh-chat-import](https://github.com/Nwflower/dsh-chat-import).

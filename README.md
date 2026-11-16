@@ -1,22 +1,28 @@
 <div align="center">
 
-# DSH Claude Style
+# DSH Codex Style
 
-**为 DeepSeek Harness 复刻 Claude Code Desktop 风格与交互体验的主题插件。**
+**为 DeepSeek Harness 复刻 OpenAI Codex 桌面风格与交互体验的主题插件，基于 [dsh-claude-style](https://github.com/Nwflower/dsh-claude-style) 修改。**
 
-> **你的下一个 Claude Code Desktop，何必是 Claude Code。**
+> **你的下一个 Codex，何必是 Codex。**
 
 [![简体中文](https://img.shields.io/badge/lang-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-red.svg)](README.md)
 [![English](https://img.shields.io/badge/lang-English-blue.svg)](README.en.md)
-[![version](https://img.shields.io/npm/v/dsh-claude-style?style=flat&label=version&color=D97757)](https://www.npmjs.com/package/dsh-claude-style)
-[![downloads](https://img.shields.io/npm/dm/dsh-claude-style?style=flat&label=downloads&color=D97757)](https://www.npmjs.com/package/dsh-claude-style)
-[![GitHub stars](https://img.shields.io/github/stars/Nwflower/dsh-claude-style?style=flat&label=%E2%98%85&color=08C)](https://github.com/Nwflower/dsh-claude-style)
 
 </div>
 
 ## 预览
 
 默认是 DeepSeek 档：侧栏用宿主自己的鲸鱼与 DeepSeek 文字标志，按钮跟着 DeepSeek 官方蓝，提示词留在宿主自己的说法上，左侧目录按 codex 的叫法写「项目」。Claude 与 DeepSeek 品牌在插件设置里切换，亮暗跟随系统。外观设置提供 Claude、DeepSeek、羊皮纸、森林、暮色、蔷薇六套配色预设，可编辑预设，也可新建、复制、重命名与删除多套配色方案。
+
+### 与上游的差异
+
+这个仓库在上游全部功能之上做了四处改动：
+
+- **Codex 风格输入区**：文字输入与控件行合并为一张圆角卡片，「+」排在权限选择之前，发送按钮变成卡片右下角的圆形主色按钮；拥挤布局由上游的响应式机制接管。
+- **个人主页**：账户弹层里的姓名打开一张个人资料页，展示本机的 Token 用量、活跃天数、年度活动图与已安装插件。
+- **品牌默认 DeepSeek**：不改动偏好时，页面直接以 DeepSeek 的标志、配色与文案呈现。
+- **会话用词可配**：会话过程行与等待行的用词可以在偏好里调整。
 
 ### Claude
 
@@ -65,18 +71,13 @@
 
 ## 安装
 
-官方插件页添加这个包名，或从终端安装：
-
-```
-dsh-claude-style
-```
+从终端安装这个仓库：
 
 ```bash
-dsh plugin --profile web add dsh-claude-style                    # npm 包（推荐）
-dsh plugin --profile web add Nwflower/dsh-claude-style#dist      # GitHub 发布分支
+dsh plugin --profile web add euansuuu/dsh-codex-style
 ```
 
-也可从[插件市场](https://github.com/dsh-market/dsh-market)或 dsh-web-all 的皮肤中心安装。同一时刻只启用一个主题；需要 dsh ≥ 0.2.2-rc.1，装好后重启 DeepSeek Harness。
+也可以在官方插件页添加本地目录。插件与上游的 npm 包同名（`dsh-claude-style`），二者只能安装其一：装了上游 npm 包再装本仓库会覆盖同名的插件。同一时刻只启用一个主题；需要 dsh ≥ 0.2.2-rc.1，装好后重启 DeepSeek Harness。
 
 ## 声明式外观配置
 
@@ -123,7 +124,7 @@ modelOrderRows:
 
 ## 字体
 
-> Anthropic 没有公开发行这三款字体；本仓库只提供下载与研究的[副本](https://github.com/Nwflower/dsh-claude-style/tree/master/packages/assets/src/fonts/anthropic)。
+> Anthropic 没有公开发行这三款字体；本仓库只提供下载与研究的[副本](https://github.com/euansuuu/dsh-claude-style/tree/master/packages/assets/src/fonts/anthropic)。
 
 启用时二选一：装进系统，或把 `.ttf` 复制到 `$DSH_HOME/dsh-claude-style/fonts/`（刷新页面后生效）。
 
@@ -145,6 +146,7 @@ modelOrderRows:
 
 ## 鸣谢
 
+- 本仓库基于 [Nwflower/dsh-claude-style](https://github.com/Nwflower/dsh-claude-style) 修改，上游的全部功能、架构与测试都来自那个仓库，Codex 风格的部分是在它之上做的调整。
 - 「钠 / Sodium」取名致敬 Minecraft 的 [Sodium](https://github.com/CaffeineMC/sodium) 渲染优化模组，本插件与它无关。
 - 消息导航参考 SherUnlocked-4869 的 [dsh-plugin-msg-nav](https://github.com/SherUnlocked-4869/dsh-plugin-msg-nav)（MIT）。
 - Deepy 小鲸鱼的动画帧图来自 calmly-eating-bugs（[@wp3171216237](https://github.com/wp3171216237)）绘制的主题包，经作者授权随插件发布；20 个动画的 GIF 见 [docs/gifs/](docs/gifs/)。
@@ -154,8 +156,4 @@ modelOrderRows:
 
 ## 友链
 
-> 想把 Claude Code / Codex 等外部代理的会话历史导入 DSH 接着聊？推荐作者的另一个插件 [dsh-chat-import](https://github.com/Nwflower/dsh-chat-import)。
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Nwflower/dsh-claude-style&type=Date)](https://star-history.com/#Nwflower/dsh-claude-style&Date)
+> 想把 Claude Code / Codex 等外部代理的会话历史导入 DSH 接着聊？推荐上游作者的另一个插件 [dsh-chat-import](https://github.com/Nwflower/dsh-chat-import)。
