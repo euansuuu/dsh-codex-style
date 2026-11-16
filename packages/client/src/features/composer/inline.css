@@ -18,7 +18,9 @@ body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-c
   border-radius: 22px;
   box-shadow: 0 3px 12px rgba(20, 20, 19, 0.04);
   outline: none;
-  padding: 4px 0 6px;
+  /* The bottom inset answers the host hint's own top inset, so the hint and
+     the control line sit at the same distance from their card edges. */
+  padding: 4px 0 14px;
   gap: 0;
   display: flex;
   flex-direction: column;
@@ -426,14 +428,15 @@ body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-c
    is a different part and retains its own natural height (D3). */
 body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"] [data-dsh-claude-part~="row"],
 body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-composer-variant="hero"]) [data-composer-card] [data-dsh-claude-part~="row"] {
-  /* The row wraps and grows under the crowding layouts the responsive pass
-     writes (responsive.css, later in the sheet); the resting line is one line
-     tall with the primary control riding the trailing group's end. */
+  /* The resting line is one line tall; the crowding overrides below let it
+     wrap when the responsive pass narrows the layout. The side insets read the
+     hint's own indent, so the permission pill and the primary button sit level
+     with the words above and off the card's border. */
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  padding: 0 4px;
+  padding: 0 14px;
   margin: 8px 0 0;
   background: transparent;
   border: none !important;
@@ -446,6 +449,18 @@ body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-c
   overflow: visible;
   position: relative;
   z-index: 3;
+}
+/* Crowding widths: the layout the responsive pass writes lets the row wrap and
+   grow inside the card, and hands the side insets back — the crowding layouts
+   were tuned to the row's full width. The toolbar attribute is the responsive
+   pass's own mark on the row. */
+body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"][data-dsh-claude-composer-layout="compact"] [data-dsh-claude-composer-toolbar],
+body[data-dsh-claude-style] [data-composer-card][data-composer-variant="inline"][data-dsh-claude-composer-layout="stacked"] [data-dsh-claude-composer-toolbar],
+body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-composer-variant="hero"]) [data-composer-card][data-dsh-claude-composer-layout="compact"] [data-dsh-claude-composer-toolbar],
+body[data-dsh-claude-style] [data-dsh-claude-part~="composer-stack"]:not([data-composer-variant="hero"]) [data-composer-card][data-dsh-claude-composer-layout="stacked"] [data-dsh-claude-composer-toolbar] {
+  flex-wrap: wrap;
+  height: auto;
+  padding: 0 4px;
 }
 /* The context-occupancy meter renders its click-open panel INSIDE the inline
    composer card, and its legend classes (`…_rows` / `…_row`) substring-match
