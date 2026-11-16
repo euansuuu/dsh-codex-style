@@ -341,7 +341,6 @@
       "reason": "设置页里的个别状态：出错、按下、展开、选好图片",
       "selectors": [
         "body[data-dsh-claude-style] .dsh-claude-settings-error",
-        "body[data-dsh-claude-style] .dsh-claude-settings-picker[aria-expanded=true]",
         "body[data-dsh-claude-style] .dsh-claude-brand-image-preview>img",
         "body[data-dsh-claude-style] .dsh-claude-brand-image-error"
       ]
@@ -408,12 +407,6 @@
       "reason": "宿主会话行的标签：脚本回答里没有这一类行",
       "selectors": [
         "body[data-dsh-claude-style] :is([data-dsh-claude-part~=tag-system],[data-dsh-claude-part~=tag-user],[data-dsh-claude-part~=tag-context],[data-dsh-claude-part~=tag-message],[data-dsh-claude-part~=tag-tool],[data-dsh-claude-part~=tag-subtool],[data-dsh-claude-part~=kind-tag]:not([data-dsh-claude-part~=kind-tag-icon],[data-dsh-claude-part~=kind-tag-label]),[data-dsh-claude-part~=row-tag],[data-dsh-claude-part~=option-line]>[data-dsh-claude-part~=badge],[data-dsh-claude-part~=attempt-badge],[data-dsh-claude-part~=key-badge])"
-      ]
-    },
-    {
-      "reason": "快速服务商的弹出层：走查没有打开它",
-      "selectors": [
-        "body[data-dsh-claude-style] .dsh-claude-quick-popover"
       ]
     },
     {

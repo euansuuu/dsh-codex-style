@@ -567,10 +567,10 @@ body[data-dsh-claude-style] .dsh-claude-brand-image-error {
    (positionAnchoredPopover), so it grows from the corner nearest the trigger —
    the bottom right, as the model picker's card does. */
 body[data-dsh-claude-style] .dsh-claude-quick-popover {
-  position: fixed !important;
-  min-width: 248px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 6px !important;
-  transform-origin: bottom right !important;
+  position: fixed;
+  min-width: 248px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transform-origin: bottom right;
 }
