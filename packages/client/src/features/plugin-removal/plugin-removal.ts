@@ -74,16 +74,15 @@ export function install(ctx: HostContext, ui: FeatureUi<typeof manifest>) {
       按行：条目随按钮脱离文档清除，3 秒确认窗到期时也会自行收回。 */
   const confirming = new Set<HTMLElement>()
 
-  /** List the manager's bundles once; the sweep waits for the answer. */
+  /** List the manager's bundles once it answers; a failed answer retries on the next pass. */
   async function refreshNames() {
     if (namesByTitle !== null || !manager) return
     const listed = await manager.listBundles()
+    if (!listed.ok) return
     namesByTitle = new Map()
-    if (listed.ok) {
-      for (const bundle of listed.value) {
-        const title = typeof bundle.meta?.title === 'string' ? bundle.meta.title : ''
-        if (title !== '') namesByTitle.set(title, bundle.name)
-      }
+    for (const bundle of listed.value) {
+      const title = typeof bundle.meta?.title === 'string' ? bundle.meta.title : ''
+      if (title !== '') namesByTitle.set(title, bundle.name)
     }
   }
 

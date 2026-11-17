@@ -4,7 +4,7 @@
   "version": "0.21.3",
   "type": "module",
   "main": "lib/host/index.js",
-  "icon": "lib/claude-mark.svg",
+  "icon": "lib/codex-mark.svg",
   "workspaces": [
     "packages/*"
   ],

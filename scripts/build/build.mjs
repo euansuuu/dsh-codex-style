@@ -49,9 +49,9 @@ const CACHE_DIR = cachePath(ROOT, 'build')
 /** The code that checks and vectorizes a sheet: part of every vector's cache key. */
 const ASSETS_MODULE = path.join(ROOT, 'packages', 'assets', 'assets.mjs')
 
-/** The clay icon remains visible on both canvases where the plain black mark does not. */
-const ICON_SOURCE = 'claude-mark-clay.svg'
-const ICON_FILE = 'claude-mark.svg'
+/** The Codex knot on its own paper plate: the plugin card paints no plate, and the plate keeps the ink readable on the dark canvas. */
+const ICON_SOURCE = 'codex-mark-icon.svg'
+const ICON_FILE = 'codex-mark.svg'
 
 /** Theme and feature sheets share one rank order because later rules win ties (D76). */
 const THEME_SHEETS = [
@@ -296,6 +296,9 @@ async function main() {
     claimed.add(`brand/${file}`)
     images[path.basename(file, '.svg')] = entry.url
   }
+  // The plugin card reads this one as a file beside the manifest, not as a token;
+  // the copy below is where its bytes land, so the claim stands here.
+  claimed.add(`brand/${ICON_SOURCE}`)
   const combines = loadCombines(plan, claimed)
 
   // The crab's sheets ride the bundle: one pair of data URIs per animation.
