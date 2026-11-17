@@ -3,7 +3,7 @@ import { DARK_THEME_ATTRIBUTE } from '@dsh-claude-style/contracts/dom'
 import { brandingVendorOf } from '@dsh-claude-style/contracts/branding-presets'
 import type { BrandingAppearance, BrandInk } from '@dsh-claude-style/contracts/branding-presets'
 import { subscribeMutations } from '@dsh-claude-style/engine/bus'
-import { BRAND_CLAUDE, BRAND_INK_ORIGINAL } from '../../constants'
+import { BRAND_INK_ORIGINAL } from '../../constants'
 import { brandingRecord, brandInkColour } from '../../shared/branding-presets'
 import { loadBrandingImages, pageAppearance, subscribeBrandImages } from '../../shared/custom-brand'
 import type { BrandImage, BrandImages } from '../../shared/custom-brand'
@@ -44,6 +44,15 @@ const BRAND_ART = {
     markRatio: 23.16 / 17.04,
     wordRatio: 96 / 24,
     wordHeight: 24 / 18,
+  },
+  // ChatGPT has no wordmark asset: the word seat draws nothing and the name
+  // rides as text (WordArt's name mode) wherever the lockup shows words.
+  chatgpt: {
+    mark: 'var(--dsh-claude-image-codex-mark)',
+    word: '',
+    markRatio: 1,
+    wordRatio: 1,
+    wordHeight: 1,
   },
 }
 
@@ -99,7 +108,7 @@ export function useBrandImages(prefs: Prefs, id: string, mode: BrandingAppearanc
  */
 export function SeatArt(props: { kind: 'mark' | 'word', image: BrandImage | null, prefs: Prefs, ink: BrandInk, absent?: 'brand' | 'none' }) {
   if (props.image === null && props.absent === 'none') return null
-  const art = BRAND_ART[props.prefs.brand === BRAND_CLAUDE ? 'claude' : 'deepseek']
+  const art = BRAND_ART[props.prefs.brand] ?? BRAND_ART.deepseek
   const own = props.image
   const image = own === null ? (props.kind === 'mark' ? art.mark : art.word) : `url("${own.url}")`
   const ratio = own === null ? (props.kind === 'mark' ? art.markRatio : art.wordRatio) : own.ratio

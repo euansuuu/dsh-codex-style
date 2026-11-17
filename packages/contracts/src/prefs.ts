@@ -17,20 +17,22 @@ export const BILLING_CHOICES = [BILLING_OFF, ...CURRENCIES] as const
 
 /** Brand marks selectable from the settings page. DeepSeek is the default. */
 export const BRAND_CLAUDE = 'claude'
+/** ChatGPT branding paints the OpenAI knot and the ChatGPT word, with its own colour card. */
+export const BRAND_CHATGPT = 'chatgpt'
 /** DeepSeek branding keeps the host brand area and selects the DeepSeek palette and mascot. */
 export const BRAND_DEEPSEEK = 'deepseek'
 /** The stored `off` value that maps to the DeepSeek brand. */
 export const BRAND_DEEPSEEK_LEGACY = 'off'
-export const BRANDS = [BRAND_CLAUDE, BRAND_DEEPSEEK] as const
+export const BRANDS = [BRAND_CLAUDE, BRAND_DEEPSEEK, BRAND_CHATGPT] as const
 
 /**
  * The built-in colour presets (D97), one id per colour card in
  * packages/client/src/theme/tokens.json; the build fails when the two disagree.
  */
-export const PALETTE_PRESETS = ['claude', 'deepseek', 'parchment', 'forest', 'dusk', 'rose'] as const
+export const PALETTE_PRESETS = ['claude', 'deepseek', 'chatgpt', 'parchment', 'forest', 'dusk', 'rose'] as const
 export type PalettePreset = typeof PALETTE_PRESETS[number]
 /** The preset each brand paints while the selection follows the brand. */
-export const BRAND_DEFAULT_PRESETS = { [BRAND_CLAUDE]: 'claude', [BRAND_DEEPSEEK]: 'deepseek' } as const satisfies Record<typeof BRANDS[number], PalettePreset>
+export const BRAND_DEFAULT_PRESETS = { [BRAND_CLAUDE]: 'claude', [BRAND_DEEPSEEK]: 'deepseek', [BRAND_CHATGPT]: 'chatgpt' } as const satisfies Record<typeof BRANDS[number], PalettePreset>
 
 /**
  * The selected colour scheme (D97): `brand` follows the selected brand's default

@@ -455,6 +455,22 @@
       "selectors": [
         "body[data-dsh-claude-style][data-ds-dark-theme] .dsh-claude-search-key"
       ]
+    },
+    {
+      "reason": "ChatGPT 品牌：走查没有切换到它，品牌选择留在设置页里",
+      "selectors": [
+        "body[data-dsh-claude-style][data-dsh-claude-brand=chatgpt] :is([data-dsh-claude-part~=brand-mark],[data-dsh-claude-part~=rail-mark])",
+        "body[data-dsh-claude-style][data-dsh-claude-brand=chatgpt] :is([data-dsh-claude-part~=brand-mark],[data-dsh-claude-part~=rail-mark])>*",
+        "body[data-dsh-claude-style][data-dsh-claude-brand=chatgpt] :is([data-dsh-claude-part~=brand-mark],[data-dsh-claude-part~=rail-mark],[data-dsh-claude-part~=hero-mark])",
+        "body[data-dsh-claude-style][data-dsh-claude-brand=chatgpt] [data-dsh-claude-part~=brand-identity]>[data-dsh-claude-part~=brand-name]",
+        "body[data-dsh-claude-style][data-dsh-claude-brand=chatgpt] [data-dsh-claude-part~=brand-identity]>[data-dsh-claude-part~=brand-name]>*",
+        "body[data-dsh-claude-style][data-dsh-claude-brand=chatgpt] [data-dsh-claude-part~=hero-mark]",
+        "body[data-dsh-claude-style][data-dsh-claude-brand=chatgpt] [data-dsh-claude-part~=hero-mark] svg",
+        "body[data-dsh-claude-style][data-dsh-claude-palette=claude][data-dsh-claude-brand=chatgpt]:not([data-ds-dark-theme])",
+        "body[data-dsh-claude-style][data-dsh-claude-palette=claude][data-dsh-claude-brand=chatgpt][data-ds-dark-theme]",
+        "body[data-dsh-claude-style][data-dsh-claude-palette=claude][data-dsh-claude-palette-card=chatgpt]:not([data-ds-dark-theme])",
+        "body[data-dsh-claude-style][data-dsh-claude-palette=claude][data-dsh-claude-palette-card=chatgpt][data-ds-dark-theme]"
+      ]
     }
   ]
 }

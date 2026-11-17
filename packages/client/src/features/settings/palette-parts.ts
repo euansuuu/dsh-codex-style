@@ -27,6 +27,7 @@ export function cardSchemes(prefs: Prefs): PaletteScheme[] {
 const PRESET_LABELS: Record<PalettePreset, CopyKey> = {
   claude: 'brandClaude',
   deepseek: 'brandDeepseek',
+  chatgpt: 'brandChatgpt',
   parchment: 'palettePresetParchment',
   forest: 'palettePresetForest',
   dusk: 'palettePresetDusk',

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BRAND_CLAUDE, BRAND_DEEPSEEK, INTERFACE_FONT_SIZE_DEFAULT, INTERFACE_FONT_SIZE_MAX, INTERFACE_FONT_SIZE_MIN, PAGE_ZOOM_DEFAULT, PAGE_ZOOM_MAX, PAGE_ZOOM_MIN, PALETTE_COLORING_BRAND, USERNAME_MAX } from '../../constants'
+import { BRAND_CHATGPT, BRAND_CLAUDE, BRAND_DEEPSEEK, INTERFACE_FONT_SIZE_DEFAULT, INTERFACE_FONT_SIZE_MAX, INTERFACE_FONT_SIZE_MIN, PAGE_ZOOM_DEFAULT, PAGE_ZOOM_MAX, PAGE_ZOOM_MIN, PALETTE_COLORING_BRAND, USERNAME_MAX } from '../../constants'
 import { COMBINE_SVGS } from 'virtual:dsh-claude-style/generated'
 import { createHostToast } from '../../shared/host-toast'
 import { interfaceFontSizePercent } from '../../shared/interface-font-size'
@@ -29,6 +29,7 @@ export function createSettingsGeneralTab(): SettingsTab {
   function paletteName(prefs: Prefs) {
     if (prefs.paletteColors === BRAND_CLAUDE) return copy('brandClaude')
     if (prefs.paletteColors === BRAND_DEEPSEEK) return copy('brandDeepseek')
+    if (prefs.paletteColors === BRAND_CHATGPT) return copy('brandChatgpt')
     const name = selectedReaderScheme(prefs)?.name ?? ''
     return name === '' ? copy('paletteCustom') : name
   }
@@ -60,6 +61,17 @@ export function createSettingsGeneralTab(): SettingsTab {
         content: [
           React.createElement('span', { key: 'mark', className: 'dsh-claude-brand-card-logo', 'data-brand': BRAND_CLAUDE, 'aria-hidden': 'true' }),
           React.createElement('span', { key: 'word', className: 'dsh-claude-brand-card-word dsh-claude-masked-word', 'aria-hidden': 'true' }),
+        ],
+      },
+      {
+        // ChatGPT's card carries the knot as a masked logo and the name as
+        // text: the brand has no wordmark asset of its own.
+        value: BRAND_CHATGPT,
+        label: copy('brandChatgpt'),
+        attributes: { 'data-brand': BRAND_CHATGPT },
+        content: [
+          React.createElement('span', { key: 'mark', className: 'dsh-claude-brand-card-logo', 'data-brand': BRAND_CHATGPT, 'aria-hidden': 'true' }),
+          React.createElement('span', { key: 'word', className: 'dsh-claude-brand-card-word-text', 'aria-hidden': 'true' }, 'ChatGPT'),
         ],
       },
     ]

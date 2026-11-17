@@ -25,6 +25,17 @@ body[data-dsh-claude-style][data-dsh-claude-brand="deepseek"] [data-dsh-claude-p
   color: var(--dsh-claude-logo-ink);
 }
 
+/* ChatGPT: the knot replaces the fish, painted as a mask over the ink like
+   the sidebar's mark; the scaffolding and the mask are the shared ones. */
+body[data-dsh-claude-style][data-dsh-claude-brand="chatgpt"] [data-dsh-claude-part~="hero-mark"] svg {
+  display: none;
+}
+
+body[data-dsh-claude-style][data-dsh-claude-brand="chatgpt"] [data-dsh-claude-part~="hero-mark"]::before {
+  width: 42.5px;
+  height: 42.5px;
+}
+
 /* The rules below are the skin's home: they stand while the home layout draws
    the page (features/home/home-layout.ts writes the attribute), and a layout
    turned off leaves the host's own headline, badge and entrance. The mark above

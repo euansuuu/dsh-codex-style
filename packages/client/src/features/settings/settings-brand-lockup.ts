@@ -218,7 +218,7 @@ export function BrandLockup(props: { prefs: Prefs, id: string, mode: BrandingApp
 
   return React.createElement(
     'div',
-    { className: 'dsh-claude-brand-lockup', 'data-brand': prefs.brand === BRAND_CLAUDE ? 'claude' : 'deepseek' },
+    { className: 'dsh-claude-brand-lockup', 'data-brand': prefs.brand },
     fixed ? null : SeatPicker({ seat: mark }),
     fixed ? null : SeatPicker({ seat: word }),
     React.createElement(
