@@ -180,6 +180,8 @@ const BRAND_MARKS = [
   'deepseek-word.svg',
   // GitHub's own mark, for the settings page's link to the repository.
   'github-mark.svg',
+  // The OpenAI knot, for the settings dialog's Codex Style nav tab.
+  'codex-mark.svg',
 ]
 
 /**

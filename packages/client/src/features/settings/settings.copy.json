@@ -153,6 +153,6 @@
   "conversationComposerNote": { "zh": "只在「重绘对话框」覆盖对话页时生效。", "en": "Takes effect only while Composer restyle covers the conversation." },
   "experimental": { "zh": "实验性", "en": "Experimental" },
   "unavailable": { "zh": "设置保存失败，请重试。", "en": "The settings change could not be saved. Try again." },
-  "title": { "zh": "Claude Style", "en": "Claude Style" },
+  "title": { "zh": "Codex Style", "en": "Codex Style" },
   "composerRequired": { "zh": "「重绘对话框」为「关闭」时不生效。", "en": "No effect while Composer restyle is Off." }
 }

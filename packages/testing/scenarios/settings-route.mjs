@@ -21,7 +21,7 @@ const shellAnswered = (selector) => {
   if (settings !== null && settings.getClientRects().length > 0) return true
   if (document.querySelector('[role="menu"] [role="menuitem"]') !== null) return true
   return [...document.querySelectorAll('button, a, [role="tab"], [role="menuitem"]')]
-    .some((node) => (node.textContent || '').trim() === 'Claude Style')
+    .some((node) => (node.textContent || '').trim() === 'Codex Style')
 }
 
 /**
@@ -36,7 +36,7 @@ const pressEntry = (page) => page.evaluate(() => {
   const menu = document.querySelector('[role="menu"] [role="menuitem"]')
   if (menu !== null) { menu.click(); return 'menu' }
   const entry = [...document.querySelectorAll('button, a, [role="tab"], [role="menuitem"]')]
-    .find((node) => (node.textContent || '').trim() === 'Claude Style')
+    .find((node) => (node.textContent || '').trim() === 'Codex Style')
   if (entry !== undefined) { entry.click(); return 'entry' }
   return 'none'
 })
@@ -60,7 +60,7 @@ async function openSkinSettings(page) {
       const settings = document.querySelector('.dsh-claude-settings')
       if (settings !== null && settings.getClientRects().length > 0) return
       const entry = [...document.querySelectorAll('button, a, [role="tab"], [role="menuitem"]')]
-        .find((node) => (node.textContent || '').trim() === 'Claude Style')
+        .find((node) => (node.textContent || '').trim() === 'Codex Style')
       if (entry !== undefined) entry.click()
     })
   }

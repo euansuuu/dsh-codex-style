@@ -4,6 +4,7 @@
 body[data-dsh-claude-style] {
   --dsh-claude-mask-claude-mark: var(--dsh-claude-image-claude-mark) center / contain no-repeat;
   --dsh-claude-mask-claude-word: var(--dsh-claude-image-claude-word) center / contain no-repeat;
+  --dsh-claude-mask-codex-mark: var(--dsh-claude-image-codex-mark) center / contain no-repeat;
 }
 body[data-dsh-claude-style] .dsh-claude-masked-mark {
   -webkit-mask: var(--dsh-claude-mask-claude-mark);
