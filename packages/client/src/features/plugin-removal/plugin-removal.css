@@ -1,0 +1,38 @@
+/* ---------- Host plugins page: the uninstall control per installed card ---------- */
+/* The host's own cards carry hashed class names; the control sits in the card's
+   title row beside the opener, quiet until hovered, red through its confirm and
+   failure states. */
+
+body[data-dsh-claude-style] .dsh-claude-plugin-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--dsw-alias-label-secondary);
+  transition: background-color var(--dsh-claude-timing-feedback), color var(--dsh-claude-timing-feedback);
+}
+
+body[data-dsh-claude-style] .dsh-claude-plugin-remove:hover {
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsh-claude-hover-bg, rgba(0, 0, 0, 0.08));
+}
+
+body[data-dsh-claude-style] .dsh-claude-plugin-remove[data-confirming] {
+  background: var(--dsw-alias-state-error-primary, #c0392b);
+  color: var(--dsw-alias-label-on-accent, #ffffff);
+}
+
+body[data-dsh-claude-style] .dsh-claude-plugin-remove[data-removing] {
+  color: var(--dsw-alias-label-secondary);
+  pointer-events: none;
+}
+
+body[data-dsh-claude-style] .dsh-claude-plugin-remove[data-failed] {
+  color: var(--dsw-alias-state-error-primary, #c0392b);
+}

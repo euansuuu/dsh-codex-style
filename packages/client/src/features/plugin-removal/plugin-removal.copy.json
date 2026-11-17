@@ -1,0 +1,8 @@
+{
+  "removeLabel": { "zh": "卸载", "en": "Uninstall" },
+  "removeConfirm": { "zh": "确认卸载", "en": "Confirm" },
+  "removing": { "zh": "正在卸载…", "en": "Uninstalling…" },
+  "removeFailed": { "zh": "卸载失败，请重试。", "en": "The uninstall failed. Try again." },
+  "selfGuard": { "zh": "本插件正在运行，无法在这里卸载。", "en": "This plugin is running and cannot uninstall itself here." },
+  "restartNote": { "zh": "已卸载，页面即将刷新。", "en": "Uninstalled; the page reloads now." }
+}

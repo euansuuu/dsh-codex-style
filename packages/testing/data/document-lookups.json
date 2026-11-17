@@ -25,6 +25,10 @@
       "count": 1,
       "reason": "The self-built trigger and popover, swept when the drawer is dropped."
     },
+    "packages/client/src/features/plugin-removal/plugin-removal.ts": {
+      "count": 1,
+      "reason": "The uninstall controls the sweeps decorated, swept once at teardown."
+    },
     "packages/client/src/features/composer/composer.ts": {
       "count": 2,
       "reason": "The marks the composer wrote, swept once at install and once at teardown."

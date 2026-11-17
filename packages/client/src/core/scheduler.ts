@@ -35,6 +35,7 @@ export interface Handles {
   ban: BanHandle
   workspace: FeatureHandle
   workspaceWords: FeatureHandle
+  pluginRemoval: { sync(): void }
   search: FeatureHandle
   sidebarPeek: FeatureHandle
   sidebarStatus: FeatureHandle
