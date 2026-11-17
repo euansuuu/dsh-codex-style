@@ -132,6 +132,9 @@ body[data-dsh-claude-style] .dsh-claude-brand-card-lockup svg {
   display: block;
   height: 100%;
   width: auto;
+  /* The lockup's own aspect outruns a three-card row's width: the drawing
+     scales into the card instead of poking past its border. */
+  max-width: 100%;
   overflow: visible;
 }
 

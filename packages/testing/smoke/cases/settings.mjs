@@ -63,7 +63,7 @@ export default {
     const pinnedCards = palette.pinned || {}
     const customCards = palette.custom || {}
     // The presets PALETTE_PRESETS names, ahead of any scheme the reader stores.
-    const PRESETS = 6
+    const PRESETS = 7
     check('every colour card is a button, the card the page paints is pressed and the others stand ready: the presets always, the reader schemes after them once stored',
       [followingCards, pinnedCards].every((state) => (state.cards || []).length === PRESETS) && (customCards.cards || []).length === PRESETS + 1 &&
         [followingCards, pinnedCards, customCards].every((state) => state.cards.every((card) => card.role === 'button' && card.pressed === (card.active ? 'true' : 'false') &&
